@@ -17,7 +17,7 @@ services:
       - todo-app-backend-net
   todo-app-pgadmin:
     image: dpage/pgadmin4
-    container_name: mschool-pgadmin
+    container_name: todo-app-pgadmin
     restart: always
     environment:
       - 'PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}'
