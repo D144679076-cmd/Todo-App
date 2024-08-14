@@ -20,7 +20,11 @@ export const getUser = async (email: string) => {
     return null;
   }
 };
-export const sessionCreate = async (userID: string) => {
+export const sessionCreate = async (
+  userID: string,
+  ip: string,
+  origin: string
+) => {
   try {
     const newSession = await $prisma.sessions.create({
       data: {
