@@ -1,4 +1,7 @@
 {
   "name": "Todo-App",
-  "packageManager": "yarn@4.2.2"
+  "packageManager": "yarn@4.2.2",
+  "devDependencies": {
+    "@types/express": "^4.17.21"
+  }
 }

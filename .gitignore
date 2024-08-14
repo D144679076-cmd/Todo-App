@@ -13,3 +13,4 @@
 .pnp.*
 /.yarn
 /.editorconfig
+/node_modules
