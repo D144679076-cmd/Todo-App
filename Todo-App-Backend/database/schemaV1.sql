@@ -21,11 +21,12 @@ CREATE TABLE roles(
 )
 CREATE SEQUENCE sessions_id_seq
 CREATE TABLE "sessions"(
-    id integer NOT NULL PRIMARY KEY DEAFAULT nextval('sessions_id_seq'),
+    id integer NOT NULL PRIMARY KEY DEFAULT nextval('sessions_id_seq'),
     user_id uuid NOT NULL,
-    access_tokens varchar(1000) NOT NULL
-    refresh_tokens varchar(1000) NOT NULL
-    expires timestamp NOT NULL
-    ip varchar(255) NOT NULL
-    origin varchar(255) NOT NULL
+    access_tokens varchar(1000) NOT NULL,
+    refresh_tokens varchar(1000) NOT NULL,
+    expires timestamp NOT NULL,
+    ip varchar(255) NOT NULL,
+    origin varchar(255) NOT NULL,
+    CONSTRAINT fk_user_id FOREIGN KEY(user_id) REFERENCES users(id)
 )
