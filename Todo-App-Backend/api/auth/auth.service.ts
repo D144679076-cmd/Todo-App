@@ -1,6 +1,12 @@
-import { CallTracker } from "assert";
 import $prisma from "../../database/init.js";
-import { AuthBody } from "../libs/reqBody.type.js";
+import CryptoJS from "crypto-js";
+import { createDecoder, createSigner } from "fast-jwt";
+type permissionObjects = {
+  create: boolean;
+  read: boolean;
+  update: boolean;
+  delete: boolean;
+};
 export const getUser = async (email: string) => {
   try {
     const user = await $prisma.users.findMany({
@@ -32,12 +38,34 @@ export const sessionCreate = async (
         access_tokens: "",
         refresh_tokens: "",
         expires: "",
-        ip: "",
-        origin: "",
+        ip: ip,
+        origin: origin,
       },
     });
   } catch (err: any) {
     console.log("node: auth.service.ts:line 27 : error: ", err);
     return null;
   }
+};
+export const passwordEncrypt = (password: string) => {
+  const hash = CryptoJS.AES.encrypt(password, "login key").toString();
+  return hash;
+};
+export const passwordCompare = (passwordInDB: string, password: string) => {
+  const pasrePassword = CryptoJS.AES.decrypt(passwordInDB, "login key");
+  if (pasrePassword.toString(CryptoJS.enc.Utf8) === password) {
+    return true;
+  } else {
+    return false;
+  }
+};
+export const tokenGenerator = async (permissionObject: permissionObjects) => {
+  const generator = createSigner({ key: "access_token", algorithm: "HS256" });
+  const token = generator(permissionObject);
+  return token;
+};
+export const tokenDecode = (token: string) => {
+  const decoder = createDecoder();
+  const decoded = decoder(token);
+  return decoded;
 };

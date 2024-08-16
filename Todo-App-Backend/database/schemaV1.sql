@@ -6,12 +6,13 @@ CREATE TABLE IF NOT EXISTS users(
     name varchar(255) NOT NULL,
     email varchar(255) UNIQUE NOT NULL,
     password varchar(255) NOT NULL,
-    role varchar(255) NOT NULL,
+    role uuid NOT NULL,
     static_token varchar(1000)
+    CONSTRAINT fk_role FOREIGN KEY(role) REFERENCES roles(id)
 )
-CREATE SEQUENCE roles_id_seq
-CREATE TABLE roles(
-    id integer NOT NULL PRIMARY KEY DEFAULT nextval('roles_id_seq'),
+CREATE SEQUENCE permissions_id_seq
+CREATE TABLE permissions(
+    id integer NOT NULL PRIMARY KEY DEFAULT nextval('permissions_id_seq'),
     table varchar(255) NOT NULL,
     role varchar(255) NOT NULL,
     create boolean NOT NULL,
@@ -29,4 +30,8 @@ CREATE TABLE "sessions"(
     ip varchar(255) NOT NULL,
     origin varchar(255) NOT NULL,
     CONSTRAINT fk_user_id FOREIGN KEY(user_id) REFERENCES users(id)
+)
+CREATE TABLE "roles"(
+    id uuid NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4 (),
+    name varchar(255) NOT NULL
 )
