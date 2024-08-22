@@ -7,14 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model roles {
+model permissions {
   id     Int     @id @default(autoincrement())
   table  String  @db.VarChar(255)
-  role   String  @db.VarChar(255)
+  role   String  @db.Uuid
   create Boolean
   read   Boolean
   update Boolean
   delete Boolean
+  roles  roles   @relation(fields: [role], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_role")
+}
+
+model roles {
+  id          String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String        @db.VarChar(255)
+  permissions permissions[]
+  users       users[]
 }
 
 model sessions {
@@ -29,11 +37,12 @@ model sessions {
 }
 
 model users {
-  id           String     @id @db.Uuid
+  id           String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name         String     @db.VarChar(255)
   email        String     @unique @db.VarChar(255)
   password     String     @db.VarChar(255)
-  role         String     @db.VarChar(255)
+  role         String     @db.Uuid
   static_token String?    @db.VarChar(1000)
   sessions     sessions[]
+  roles        roles      @relation(fields: [role], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_role")
 }

@@ -1,7 +1,15 @@
 import { AuthBody } from "../libs/reqBody.type.js";
 import type { Request, Response } from "express";
-import { getUser } from "./auth.service.js";
+import {
+  getUser,
+  passwordDecrypt,
+  refreshTokenGenerator,
+  sessionCreate,
+  tokenGenerator,
+} from "./auth.service.js";
 import { error } from "console";
+import $prisma from "../../database/init.js";
+import { env } from "process";
 
 export const loginByEmail = async (req: Request, res: Response) => {
   const authRequest: AuthBody = req.body as AuthBody;
@@ -20,9 +28,42 @@ export const loginByEmail = async (req: Request, res: Response) => {
       message: "Tài khoản không tồn tại, vui lòng đăng ký tài khoảng",
       code: 401,
     });
-  } else if (userInDb[0].password === authRequest.password) {
-    console.log("login success:", userInDb[0].email);
-    res.status(200).json();
+  } else if (passwordDecrypt(userInDb[0].password) === authRequest.password) {
+    console.log("login in process:", userInDb[0].email);
+    const permissionObjects = await $prisma.permissions.findMany({
+      where: {
+        role: userInDb[0].role,
+      },
+      select: {
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+      },
+    });
+    console.log("permissionObjects:", permissionObjects);
+    const token = tokenGenerator({
+      user: userInDb[0].id,
+      permission: permissionObjects,
+      expiresTime: Number(env.TOKEN_LIFE_TIME!) * 60 * 1000,
+    });
+    const refreshToken = await refreshTokenGenerator({
+      user: userInDb[0].id,
+      expiresTime: Number(env.REFRESH_LIFE_TIME!) * 60 * 1000,
+    });
+    const newSession = await sessionCreate(
+      userInDb[0].id,
+      req.headers.host ?? "localhost",
+      req.headers.origin ?? "localhost",
+      token,
+      refreshToken
+    );
+    res.status(200).json({
+      user_id: userInDb[0].id,
+      token: token,
+      refreshToken: refreshToken,
+      lifeTime: Number(env.TOKEN_LIFE_TIME) * 60 * 1000,
+    });
   } else {
     res.status(403).json({
       error: "Wrong password",

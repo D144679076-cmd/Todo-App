@@ -13,12 +13,13 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE SEQUENCE permissions_id_seq
 CREATE TABLE permissions(
     id integer NOT NULL PRIMARY KEY DEFAULT nextval('permissions_id_seq'),
-    table varchar(255) NOT NULL,
-    role varchar(255) NOT NULL,
-    create boolean NOT NULL,
-    read boolean NOT NULL,
-    update boolean NOT NULL,
-    delete boolean NOT NULL
+    "table" varchar(255) NOT NULL,
+    "role" uuid NOT NULL,
+    "create" boolean NOT NULL,
+    "read" boolean NOT NULL,
+    "update" boolean NOT NULL,
+    "delete" boolean NOT NULL,
+    CONSTRAINT fk_role FOREIGN KEY("role") REFERENCES roles(id)
 )
 CREATE SEQUENCE sessions_id_seq
 CREATE TABLE "sessions"(
