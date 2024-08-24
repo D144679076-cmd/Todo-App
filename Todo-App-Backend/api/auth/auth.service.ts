@@ -66,9 +66,8 @@ export const passwordCompare = (passwordInDB: string, password: string) => {
   const pasrePassword = CryptoJS.AES.decrypt(passwordInDB, "login key");
   if (pasrePassword.toString(CryptoJS.enc.Utf8) === password) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 };
 export const tokenGenerator = (permissionObject: {
   user: string;
