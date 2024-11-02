@@ -1,8 +1,29 @@
-# Build stage
-FROM node:18-alpine as builder
+# Development stage
+FROM node:20-alpine AS development
 
 # Set working directory
-WORKDIR /app
+WORKDIR /usr/src/app
+
+# Copy package files
+COPY package*.json ./
+COPY tsconfig.json ./
+
+# Install dependencies including 'devDependencies'
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Expose port
+EXPOSE 8055
+
+# Start the application in development mode
+CMD ["npm", "run", "dev"]
+
+# Build stage
+FROM node:20-alpine AS builder
+
+WORKDIR /usr/src/app
 
 # Copy package files
 COPY package*.json ./
@@ -12,30 +33,27 @@ COPY tsconfig.json ./
 RUN npm install
 
 # Copy source code
-COPY api/ ./api/
-COPY database/ ./database/
-# Build TypeScript
+COPY . .
+
+# Build the application
 RUN npm run build
 
 # Production stage
-FROM node:20-alpine
+FROM node:20-alpine AS production
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy package files
 COPY package*.json ./
 
-# Install production dependencies only
-RUN npm install 
+# Install only production dependencies
+RUN npm install --production
 
-# Copy built files from builder stage
-COPY --from=builder /app/dist ./dist
-
-# # Set environment variables
-# ENV NODE_ENV=production
+# Copy built application from builder stage
+COPY --from=builder /usr/src/app/dist ./dist
 
 # Expose port
 EXPOSE 8055
 
 # Start the application
-CMD ["node", "dist/index.js"]
+CMD ["npm", "start"]

@@ -56,6 +56,7 @@ services:
     environment:
       - NODE_OPTIONS=${NODE_OPTIONS}
     restart: unless-stopped
+    command: npm run build && npm start
     networks:
       - todo-app-backend-net
 
