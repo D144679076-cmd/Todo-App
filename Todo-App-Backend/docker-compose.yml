@@ -1,14 +1,14 @@
-version: '3'
+version: "3"
 services:
   todo-app-db:
     image: postgres
     container_name: todo-app-db
     restart: always
     environment:
-      - 'POSTGRES_DB=${POSTGRES_DB}'
-      - 'POSTGRES_USER=${POSTGRES_USER}'
-      - 'POSTGRES_PASSWORD=${POSTGRES_PASSWORD}'
-      - 'PGDATA=/pgdata'
+      - "POSTGRES_DB=${POSTGRES_DB}"
+      - "POSTGRES_USER=${POSTGRES_USER}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+      - "PGDATA=/pgdata"
     volumes:
       - ./data:/pgdata
     ports:
@@ -20,8 +20,8 @@ services:
     container_name: todo-app-pgadmin
     restart: always
     environment:
-      - 'PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}'
-      - 'PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}'
+      - "PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}"
+      - "PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}"
     # ports:
     #   - '127.0.0.1:${PGADMIN_PORT}:80'
     volumes:
@@ -38,12 +38,27 @@ services:
     volumes:
       - ./nginx:/etc/nginx/conf.d
     ports:
-      - '${PUBLIC_PORT}:80'
+      - "${PUBLIC_PORT}:80"
     networks:
       - todo-app-frontend-net
     depends_on:
       - todo-app-db
       - todo-app-pgadmin
+
+  todo-node-app:
+    build:
+      context: ./ # Uses the current directory as build context
+      dockerfile: Dockerfile # Specifies the Dockerfile to use
+    ports:
+      - "8080:8080" # Maps host port to container port
+    volumes:
+      - ./app:/app # Mounts the local app directory to container
+    environment:
+      - NODE_OPTIONS=${NODE_OPTIONS}
+    restart: unless-stopped
+    networks:
+      - todo-app-backend-net
+
 networks:
   todo-app-backend-net:
   todo-app-frontend-net:
