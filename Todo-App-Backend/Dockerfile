@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 # Copy package files
 COPY package*.json ./
 COPY tsconfig.json ./
-
+COPY .env ./
 # Install dependencies including 'devDependencies'
 RUN npm install
 
@@ -15,7 +15,6 @@ RUN npm install
 COPY . .
 
 # Expose port
-EXPOSE 8055
 
 # Start the application in development mode
 CMD ["npm", "run", "dev"]
@@ -28,7 +27,7 @@ WORKDIR /usr/src/app
 # Copy package files
 COPY package*.json ./
 COPY tsconfig.json ./
-
+COPY .env ./
 # Install dependencies
 RUN npm install
 
@@ -42,6 +41,7 @@ RUN npm run build
 FROM node:20-alpine AS production
 
 WORKDIR /usr/src/app
+COPY .env ./
 
 # Copy package files
 COPY package*.json ./
@@ -53,7 +53,6 @@ RUN npm install --production
 COPY --from=builder /usr/src/app/dist ./dist
 
 # Expose port
-EXPOSE 8055
 
 # Start the application
 CMD ["npm", "start"]
