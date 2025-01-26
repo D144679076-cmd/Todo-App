@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users(
     email varchar(255) UNIQUE NOT NULL,
     password varchar(255) NOT NULL,
     role uuid NOT NULL,
-    static_token varchar(1000)
+    static_token varchar(1000),
     CONSTRAINT fk_role FOREIGN KEY(role) REFERENCES roles(id)
 )
 CREATE SEQUENCE permissions_id_seq
