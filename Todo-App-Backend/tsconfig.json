@@ -118,7 +118,8 @@
     "./database/init.ts",
     "api/user/*.ts",
     "./api/libs/*.d.ts",
-    "./api/libs/*.ts"
+    "./api/libs/*.ts",
+    "./*.ts"
   ]
   // "exclude": ["src/**/*.spec.ts"]
 }

@@ -41,16 +41,22 @@ RUN npm run build
 FROM node:20-alpine AS production
 
 WORKDIR /usr/src/app
+
+
 COPY .env ./
 
 # Copy package files
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm install --production
+RUN npm install
 
 # Copy built application from builder stage
 COPY --from=builder /usr/src/app/dist ./dist
+
+COPY database/prisma ./prisma
+
+RUN npx prisma generate
 
 # Expose port
 EXPOSE 8089

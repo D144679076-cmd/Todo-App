@@ -12,7 +12,7 @@ services:
     volumes:
       - ./data:/pgdata
     ports:
-      - 5555:5555
+      - 5432:5432
     networks:
       - todo-app-backend-net
   todo-app-pgadmin:
@@ -33,23 +33,23 @@ services:
       - todo-app-db
   
 
-  todo-node-app:
-    container_name: todo-node-app
-    build:
-      context: ./ # Uses the current directory as build context
-      dockerfile: Dockerfile # Specifies the Dockerfile to use
-    # ports:
-    #   - "${API_PORT}:8089"
-    volumes:
-      - ./app/:/app/ # Mounts the local app directory to container
-    environment:
-      - NODE_OPTIONS=${NODE_OPTIONS}
-    restart: unless-stopped
-    # command: ls -l -a
-    networks:
-      - todo-app-backend-net
-    depends_on:
-      - todo-app-db
+  # todo-node-app:
+  #   container_name: todo-node-app
+  #   build:
+  #     context: ./ # Uses the current directory as build context
+  #     dockerfile: Dockerfile # Specifies the Dockerfile to use
+  #   ports:
+  #     - "${API_PORT}:8089"
+  #   volumes:
+  #     - ./app/:/app/ # Mounts the local app directory to container
+  #   environment:
+  #     - NODE_OPTIONS=${NODE_OPTIONS}
+  #   restart: unless-stopped
+  #   # command: ls -l -a
+  #   networks:
+  #     - todo-app-backend-net
+  #   depends_on:
+  #     - todo-app-db
   todo-app-web:
     image: nginx:1.25-alpine-slim
     container_name: todo-app-web
@@ -64,7 +64,7 @@ services:
     depends_on:
       - todo-app-db
       - todo-app-pgadmin
-      - todo-node-app
+      # - todo-node-app
 networks:
   todo-app-backend-net:
   todo-app-frontend-net:
