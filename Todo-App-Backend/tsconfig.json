@@ -116,7 +116,7 @@
   },
   "include": [
     "./database/init.ts",
-    "./api/auth/*.ts",
+    "api/user/*.ts",
     "./api/libs/*.d.ts",
     "./api/libs/*.ts"
   ]

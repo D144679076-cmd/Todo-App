@@ -11,11 +11,12 @@ import {
   refreshTokenGenerator,
   sessionCreate,
   tokenGenerator,
-} from "./auth.service.js";
+} from "./user.service.js";
 import $prisma from "../../database/init.js";
 import { env } from "node:process";
 
 export const loginByEmail = async (req: Request, res: Response) => {
+  await $prisma.$connect();
   const authRequest: AuthBody = req.body as AuthBody;
   console.log("authRequest:", authRequest);
   if (!authRequest || !authRequest.email || !authRequest.password) {
@@ -79,6 +80,7 @@ export const loginByEmail = async (req: Request, res: Response) => {
   });
 };
 export const registerByEmail = async (req: Request, res: Response) => {
+  await $prisma.$connect();
   try {
     const registeBody: registeBody = req.body as registeBody;
     if (!registeBody || !registeBody.email || !registeBody.password) {
@@ -134,6 +136,7 @@ export const registerByEmail = async (req: Request, res: Response) => {
 };
 
 export const logoutByEmail = async (req: Request, res: Response) => {
+  await $prisma.$connect();
   const logoutBody: logoutBody = req.body as logoutBody;
   const user = await getUser(logoutBody.email);
   if (!user || user.length === 0) {

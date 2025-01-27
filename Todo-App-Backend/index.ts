@@ -1,9 +1,24 @@
 import express from "express";
 import { configDotenv } from "dotenv";
 import { env } from "node:process";
+import userRouter from "./api/user/user.routes.js";
+import $prisma from "./database/init.js";
 configDotenv({ path: "./.env" });
+
 const app = express();
-app.listen(env.PUBLIC_PORT ?? 8055, () => {
-  console.log(`Server started on port ${env.PUBLIC_PORT ?? 8055}`);
-});
-export default app;
+
+const initApp = () => {
+  app.get("/", (req, res) => {
+    res.status(200).json({
+      message: "Hello World",
+    });
+  });
+  app.use("/user", userRouter);
+  app.listen(env.API_PORT ?? 8055, async () => {
+    await $prisma.$connect();
+    console.log("Database connected");
+    console.log(`Server started on port ${env.API_PORT ?? 8055}`);
+  });
+};
+
+initApp();

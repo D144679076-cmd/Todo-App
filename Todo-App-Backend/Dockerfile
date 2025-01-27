@@ -53,6 +53,6 @@ RUN npm install --production
 COPY --from=builder /usr/src/app/dist ./dist
 
 # Expose port
-
+EXPOSE 8089
 # Start the application
 CMD ["npm", "start"]
