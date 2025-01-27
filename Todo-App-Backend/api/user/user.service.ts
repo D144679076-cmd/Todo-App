@@ -2,7 +2,8 @@ import $prisma from "../../database/init.js";
 import CryptoJS from "crypto-js";
 import { createDecoder, createSigner } from "fast-jwt";
 import { configDotenv } from "dotenv";
-import { env } from "process";
+import { env } from "node:process";
+import { Prisma } from "@prisma/client";
 configDotenv({ path: "../../.env" });
 type permissionObjects = {
   create: boolean;
@@ -27,6 +28,47 @@ export const getUser = async (email: string) => {
     return user;
   } catch (err: any) {
     console.log("node: auth.service.ts:line 18 : error: ", err);
+    return null;
+  }
+};
+export const createUser = async (data: Partial<Prisma.usersCreateInput>) => {
+  try {
+    const user = await $prisma.users.create({
+      data: data,
+    });
+    return user;
+  } catch (err: any) {
+    console.log("node: auth.service.ts:line 34 : error: ", err);
+    return null;
+  }
+};
+export const updateUser = async (
+  id: string,
+  data: Partial<Prisma.usersUpdateInput>
+) => {
+  try {
+    const user = await $prisma.users.update({
+      where: {
+        id: id,
+      },
+      data: data,
+    });
+    return user;
+  } catch (err: any) {
+    console.log("node: auth.service.ts:line 34 : error: ", err);
+    return null;
+  }
+};
+export const deleteUser = async (id: string) => {
+  try {
+    const user = await $prisma.users.delete({
+      where: {
+        id: id,
+      },
+    });
+    return user;
+  } catch (err: any) {
+    console.log("node: auth.service.ts:line 34 : error: ", err);
     return null;
   }
 };
