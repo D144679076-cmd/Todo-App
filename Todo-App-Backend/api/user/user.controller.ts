@@ -83,6 +83,7 @@ export const registerByEmail = async (req: Request, res: Response) => {
   await $prisma.$connect();
   try {
     const registeBody: registeBody = req.body as registeBody;
+    console.log("registeBody:", registeBody);
     if (!registeBody || !registeBody.email || !registeBody.password) {
       return res.status(400).json({
         error: "Invalid request",
@@ -127,6 +128,7 @@ export const registerByEmail = async (req: Request, res: Response) => {
       message: "Success",
     });
   } catch (err) {
+    console.log("node: auth.service.ts:line 131 : error: ", err);
     return res.status(500).json({
       error: "Internal server error",
       message: "Lỗi khi tạo tài khoản",

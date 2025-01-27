@@ -1,17 +1,12 @@
 import express from "express";
 import type { Request, Response } from "express";
 import { loginByEmail, registerByEmail } from "./user.controller.js";
-const router = express.Router();
-router.get("/", async (req: Request, res: Response) => {
-  res.status(200).json({
-    message: "Hello World",
-  });
-});
-router.post("/auth", async (req: Request, res: Response) => {
+const userRouter = express.Router();
+userRouter.route("/auth").post(async (req: Request, res: Response) => {
   await loginByEmail(req, res);
 });
-router.post("/register", async (req: Request, res: Response) => {
-  console.log("register");
+userRouter.route("/register").post(async (req, res) => {
+  console.log(req.body);
   await registerByEmail(req, res);
 });
-export default router;
+export default userRouter;
