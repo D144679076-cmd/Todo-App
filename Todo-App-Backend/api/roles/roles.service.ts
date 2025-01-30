@@ -17,6 +17,19 @@ export const getRoles = async (queryObject: Prisma.rolesSelect) => {
     return null;
   }
 };
+export const getRole = async (id: string) => {
+  try {
+    const role = await $prisma.roles.findMany({
+      where: {
+        id: id,
+      },
+    });
+    return role;
+  } catch (err: any) {
+    console.log("node: auth.service.ts:line 34 : error: ", err);
+    return null;
+  }
+};
 export const createRole = async (data: Prisma.rolesCreateInput) => {
   try {
     const role = await $prisma.roles.create({

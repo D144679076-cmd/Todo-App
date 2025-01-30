@@ -3,7 +3,7 @@ import CryptoJS from "crypto-js";
 import { createDecoder, createSigner } from "fast-jwt";
 import { configDotenv } from "dotenv";
 import { env } from "node:process";
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 configDotenv({ path: "../../.env" });
 type permissionObjects = {
   create: boolean;
@@ -11,11 +11,12 @@ type permissionObjects = {
   update: boolean;
   delete: boolean;
 };
-export const getUser = async (email: string) => {
+export const getUser = async (email?: string, id?: string) => {
   try {
     const user = await $prisma.users.findMany({
       where: {
-        email: email,
+        ...(email && { email: email }),
+        ...(id && { id: id }),
       },
       select: {
         id: true,
@@ -67,6 +68,57 @@ export const deleteUser = async (id: string) => {
       },
     });
     return user;
+  } catch (err: any) {
+    console.log("node: auth.service.ts:line 34 : error: ", err);
+    return null;
+  }
+};
+export const getUsers = async () => {
+  try {
+    const users = await $prisma.users.findMany({
+      select: {
+        id: true,
+        password: true,
+        email: true,
+        name: true,
+        role: true,
+      },
+    });
+    return users;
+  } catch (err: any) {
+    console.log("node: auth.service.ts:line 34 : error: ", err);
+    return null;
+  }
+};
+export const updateUsers = async (
+  data: Prisma.usersUpdateInput,
+  id: string[]
+) => {
+  try {
+    const users = await $prisma.users.updateMany({
+      where: {
+        id: {
+          in: id,
+        },
+      },
+      data: data,
+    });
+    return users;
+  } catch (err: any) {
+    console.log("node: auth.service.ts:line 34 : error: ", err);
+    return null;
+  }
+};
+export const deleteUsers = async (id: string[]) => {
+  try {
+    const users = await $prisma.users.deleteMany({
+      where: {
+        id: {
+          in: id,
+        },
+      },
+    });
+    return users;
   } catch (err: any) {
     console.log("node: auth.service.ts:line 34 : error: ", err);
     return null;
