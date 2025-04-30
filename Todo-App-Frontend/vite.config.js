@@ -7,9 +7,16 @@ import tailwindcss from 'tailwindcss'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      template: { transformAssetUrls }
+    }),
     vueDevTools(),
-    tailwindcss()
+    tailwindcss(),
+    quasar({
+      sassVariables: fileURLToPath(
+        new URL('./src/quasar-variables.sass', import.meta.url)
+      )
+    })
   ],
   resolve: {
     alias: {
