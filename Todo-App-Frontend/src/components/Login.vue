@@ -7,7 +7,7 @@ import { ref } from "vue";
 import $api from "@/plugins/axios";
 import { useToast } from "primevue";
 import router from "@/router";
-
+import Toast from "primevue/toast";
 // Reactive properties for form inputs
 const email = ref("");
 const password = ref("");
@@ -45,6 +45,7 @@ const handleSubmit = () => {
 </script>
 
 <template>
+  <Toast position="top-right" />
   <div class="login-container">
     <Card class="w-full p-6 bg-white shadow-md rounded-lg" style="width: 650px">
       <template #title>
@@ -97,7 +98,7 @@ const handleSubmit = () => {
                 to="/dang-ky"
                 class="hover:underline w-fit hover:text-blue-600"
               >
-                Don't have an account? Register one
+                Don't have an account? Register one!
               </RouterLink>
             </div>
             <div class="w-fit">

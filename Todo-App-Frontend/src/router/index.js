@@ -2,7 +2,7 @@
 import { createRouter, createMemoryHistory } from "vue-router";
 import Login from "../components/Login.vue";
 import { createWebHistory } from "vue-router";
-
+import Register from "@/components/Register.vue";
 const checkAuth = () => {
   const token = localStorage.getItem("token");
   return !!token;
@@ -12,6 +12,13 @@ const routes = [
   {
     path: "/dang-nhap",
     component: Login,
+  },
+  {
+    path: "/dang-ky",
+    component: Register,
+  },
+  {
+    path: "/quen-mat-khau",
   },
 ];
 

@@ -4,6 +4,7 @@ import router from "./router";
 import PrimeVue from "primevue/config";
 import Aura from "@primeuix/themes/aura"
 import "./assets/main.css";
+import ToastService from 'primevue/toastservice';
 
 const app = createApp(App);
 
@@ -14,4 +15,6 @@ app.use(PrimeVue, { ripple: true, theme:{
         darkModeSelector: '.my-app-dark',
     }
 } }); // Enable ripple effect
+app.use(ToastService);
+
 app.mount("#app");
