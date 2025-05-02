@@ -44,7 +44,9 @@ const handleRegister = () => {
 
 <template>
   <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="w-full max-w-md p-6 bg-white shadow-md rounded-lg">
+    <div
+      class="w-full max-w-md p-6 bg-white shadow-md rounded-lg flex flex-col gap-y-3"
+    >
       <div class="text-center mb-6">
         <i class="pi pi-user text-4xl text-gray-600"></i>
         <h2 class="text-2xl font-bold text-gray-800">Create your account</h2>
@@ -52,7 +54,7 @@ const handleRegister = () => {
           Fill in your information to get started
         </p>
       </div>
-      <div>
+      <div class="gap-y-3.5 flex flex-col">
         <div class="mb-4">
           <label for="fullName" class="block text-sm font-medium text-gray-700"
             >Full Name</label
@@ -127,10 +129,12 @@ const handleRegister = () => {
           />
         </div>
       </div>
-      <p class="text-center text-sm text-gray-500 mt-4">
-        Already have an account?
-        <a href="/dang-nhap" class="text-blue-500 hover:underline">Sign in</a>
-      </p>
+      <div class="mt-6 text-center">
+        <p class="text-sm text-gray-500">
+          Already have an account?
+          <a href="/login" class="text-blue-500 hover:underline">Login</a>
+        </p>
+      </div>
     </div>
   </div>
 </template>

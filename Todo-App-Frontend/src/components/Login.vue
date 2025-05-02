@@ -103,7 +103,7 @@ const handleSubmit = () => {
             </div>
             <div class="w-fit">
               <RouterLink
-                to="/forgot-password"
+                to="/quen-mat-khau"
                 class="hover:underline w-fit hover:text-blue-600"
               >
                 Forgot password? Reset!

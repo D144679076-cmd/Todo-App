@@ -3,6 +3,7 @@ import { createRouter, createMemoryHistory } from "vue-router";
 import Login from "../components/Login.vue";
 import { createWebHistory } from "vue-router";
 import Register from "@/components/Register.vue";
+import ResetPasword from "@/components/ResetPasword.vue";
 const checkAuth = () => {
   const token = localStorage.getItem("token");
   return !!token;
@@ -19,6 +20,7 @@ const routes = [
   },
   {
     path: "/quen-mat-khau",
+    component: ResetPasword,
   },
 ];
 
