@@ -1,17 +1,17 @@
 <script setup>
 import { ref } from "vue";
 import InputText from "primevue/inputtext";
-import Dropdown from "primevue/dropdown";
+import Select from "primevue/select";
 import Checkbox from "primevue/checkbox";
 import Button from "primevue/button";
-
+import $api from "@/plugins/axios";
+import DatePicker from "primevue/datepicker";
 // Reactive properties for form inputs
 const fullName = ref("");
 const birthday = ref("");
 const email = ref("");
 const password = ref("");
 const gender = ref(null);
-const interests = ref([]);
 const termsAccepted = ref(false);
 
 // Gender options
@@ -37,7 +37,13 @@ const handleRegister = () => {
     email: email.value,
     password: password.value,
     gender: gender.value,
-    interests: interests.value,
+  });
+  $api.post("/auth/register", {
+    fullName: fullName.value,
+    birthday: birthday.value,
+    email: email.value,
+    password: password.value,
+    gender: gender.value,
   });
 };
 </script>
@@ -70,10 +76,11 @@ const handleRegister = () => {
           <label for="birthday" class="block text-sm font-medium text-gray-700"
             >Birthday</label
           >
-          <InputText
+          <DatePicker
             id="birthday"
             v-model="birthday"
             placeholder="dd/mm/yyyy"
+            dateFormat="dd/mm/yy"
             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
@@ -105,11 +112,13 @@ const handleRegister = () => {
           <label for="gender" class="block text-sm font-medium text-gray-700"
             >Gender</label
           >
-          <Dropdown
+          <Select
             id="gender"
             v-model="gender"
             :options="genderOptions"
             placeholder="Select gender"
+            option-label="label"
+            option-value="value"
             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
@@ -126,6 +135,7 @@ const handleRegister = () => {
             label="Create Account"
             class="w-full bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             type="submit"
+            @click="handleRegister"
           />
         </div>
       </div>

@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node --loader ts-node/esm index.ts",
+    "dev": "node --watch --loader ts-node/esm index.ts ",
     "build": "npx tsc ",
     "start": "node ./dist/index.js"
   },
@@ -17,7 +17,7 @@
   "dependencies": {
     "@prisma/client": "^5.18.0",
     "@types/crypto-js": "^4.2.2",
-    "@types/node": "^20.14.9",
+    "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.2",
@@ -26,7 +26,9 @@
     "typescript": "^5.5.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/node": "^22.15.3",
     "prisma": "^5.18.0"
   }
 }

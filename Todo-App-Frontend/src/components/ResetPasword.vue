@@ -22,7 +22,7 @@ const handlePasswordReset = () => {
   }
 
   $api
-    .post("/password-reset", { email: email.value })
+    .post("/auth/password-reset", { email: email.value })
     .then(() => {
       toast.add({
         severity: "success",

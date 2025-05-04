@@ -17,7 +17,7 @@ const handleSubmit = () => {
   console.log("Email:", email.value);
   console.log("Password:", password.value);
   $api
-    .post("/auth", {
+    .post("/auth/login", {
       email: email.value,
       password: password.value,
     })
