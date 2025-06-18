@@ -5,7 +5,7 @@ import { createWebHistory } from "vue-router";
 import Register from "@/components/Register.vue";
 import ResetPasword from "@/components/ResetPasword.vue";
 const checkAuth = () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("auth_data");
   return !!token;
 };
 

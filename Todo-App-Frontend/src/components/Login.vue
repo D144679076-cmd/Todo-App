@@ -29,7 +29,7 @@ const handleSubmit = () => {
         detail: "Welcome back!",
         life: 3000,
       });
-
+      localStorage.setItem("auth_data", JSON.stringify(response.data));
       window.location.href = "/";
     })
     .catch((error) => {

@@ -7,7 +7,7 @@ const isAuthenticated = ref(false);
 
 // Function to check authentication
 const checkAuth = () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("auth_data");
   isAuthenticated.value = !!token;
 };
 
