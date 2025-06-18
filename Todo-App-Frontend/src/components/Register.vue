@@ -6,6 +6,9 @@ import Checkbox from "primevue/checkbox";
 import Button from "primevue/button";
 import $api from "@/plugins/axios";
 import DatePicker from "primevue/datepicker";
+import { useToast } from "primevue";
+import Toast from "primevue/toast";
+const toast = useToast();
 // Reactive properties for form inputs
 const fullName = ref("");
 const birthday = ref("");
@@ -38,17 +41,29 @@ const handleRegister = () => {
     password: password.value,
     gender: gender.value,
   });
-  $api.post("/auth/register", {
-    fullName: fullName.value,
-    birthday: birthday.value,
-    email: email.value,
-    password: password.value,
-    gender: gender.value,
-  });
+  $api
+    .post("/auth/register", {
+      fullName: fullName.value,
+      birthday: birthday.value,
+      email: email.value,
+      password: password.value,
+      gender: gender.value,
+    })
+    .then((response) => {
+      console.log("Registration successful:", response.data);
+      toast.add({
+        severity: "success",
+        summary: "Registration successful",
+        detail: "You can now log in with your credentials.",
+        life: 3000,
+      });
+      window.location.href = "/login";
+    });
 };
 </script>
 
 <template>
+  <Toast position="top-right" />
   <div class="flex items-center justify-center min-h-screen bg-gray-100">
     <div
       class="w-full max-w-md p-6 bg-white shadow-md rounded-lg flex flex-col gap-y-3"

@@ -118,7 +118,7 @@ export const registerByEmail = async (req: Request, res: Response) => {
       data: {
         email: registeBody.email,
         password: passwordInDB,
-        name: registeBody.name,
+        name: registeBody.fullName,
         role: role[0]?.id ?? "",
       },
     });

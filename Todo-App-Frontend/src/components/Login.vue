@@ -29,7 +29,8 @@ const handleSubmit = () => {
         detail: "Welcome back!",
         life: 3000,
       });
-      router.push("/"); // Redirect to the home page or dashboard
+
+      window.location.href = "/";
     })
     .catch((error) => {
       console.error("Login failed:", error);

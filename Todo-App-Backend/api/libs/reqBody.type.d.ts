@@ -5,7 +5,7 @@ export type AuthBody = {
 export type registeBody = {
   email: string;
   password: string;
-  name: string;
+  fullName: string;
 };
 export type logoutBody = {
   email: string;
