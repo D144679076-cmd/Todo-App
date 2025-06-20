@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS users(
     password varchar(255) NOT NULL,
     role uuid NOT NULL,
     static_token varchar(1000),
-    CONSTRAINT fk_role FOREIGN KEY(role) REFERENCES roles(id)
+    CONSTRAINT fk_role FOREIGN KEY(role) REFERENCES roles(id),
+    avatarLinks varchar(1000)
 )
 CREATE SEQUENCE permissions_id_seq
 CREATE TABLE permissions(

@@ -1,7 +1,7 @@
 <script setup>
 import { RouterView } from "vue-router";
 import { ref } from "vue";
-
+import NavBar from "./components/NavBar.vue";
 // Reactive property to track authentication status
 const isAuthenticated = ref(false);
 
@@ -20,8 +20,8 @@ checkAuth();
     <RouterView />
   </template>
   <template v-else>
-    <header></header>
-    <main>
+    <header class="w-full"><NavBar class="w-full" /></header>
+    <main class="mt-16">
       <RouterView />
     </main>
     <footer></footer>
