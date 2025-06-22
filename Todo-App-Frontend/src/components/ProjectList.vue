@@ -166,7 +166,12 @@ function prioritySeverity(priority) {
           </div>
         </div>
         <div class="flex justify-end mt-2" style="gap: 10px; margin-top: 8px">
-          <Button label="Clear" @click="clearFilters" icon="pi pi-refresh" />
+          <Button
+            label="Clear"
+            @click="clearFilters"
+            icon="pi pi-refresh"
+            outlined
+          />
         </div>
       </div>
       <div

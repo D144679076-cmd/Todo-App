@@ -105,45 +105,41 @@ const confirmDeleteTask = (task) => {
       class="filters mb-4 px-8 py-8 bg-white"
       style="margin: 16px; border-radius: 8px"
     >
-      <h2 class="text-xl font-bold mb-3 text-black">Filters</h2>
-      <div class="grid grid-cols-4 gap-4">
-        <div class="filter-group">
-          <label class="block mb-2 text-black">Priority</label>
-          <Dropdown
-            v-model="selectedPriority"
-            :options="priorities"
-            placeholder="All Priorities"
-            class="w-full"
-          />
+      <div class="flex flex-col gap-y-4 w-full">
+        <h2 class="text-xl font-bold mb-3 text-black">Filters</h2>
+        <div class="grid grid-cols-3 gap-4">
+          <div class="filter-group">
+            <label class="block mb-2 text-black">Priority</label>
+            <Dropdown
+              v-model="selectedPriority"
+              :options="priorities"
+              placeholder="All Priorities"
+              class="w-full"
+            />
+          </div>
+          <div class="filter-group">
+            <label class="block mb-2 text-black">Project</label>
+            <Dropdown
+              v-model="selectedProject"
+              :options="projects"
+              placeholder="All Projects"
+              class="w-full"
+            />
+          </div>
+          <div class="">
+            <label class="block mb-2 text-black">Deadline</label>
+            <Dropdown
+              v-model="selectedDeadline"
+              :options="deadlines"
+              placeholder="All Deadlines"
+              class="w-full"
+            />
+          </div>
         </div>
-        <div class="filter-group">
-          <label class="block mb-2 text-black">Project</label>
-          <Dropdown
-            v-model="selectedProject"
-            :options="projects"
-            placeholder="All Projects"
-            class="w-full"
-          />
-        </div>
-        <div class="filter-group">
-          <label class="block mb-2 text-black">Deadline</label>
-          <Dropdown
-            v-model="selectedDeadline"
-            :options="deadlines"
-            placeholder="All Deadlines"
-            class="w-full"
-          />
-        </div>
-        <div class="filter-group flex items-end gap-2">
-          <Button
-            label="Apply Filters"
-            class="p-button-primary w-full"
-            icon="pi pi-filter"
-            @click="applyFilters"
-          />
+        <div class="filter-group items-end gap-2 flex justify-end">
           <Button
             label="Reset Filters"
-            class="p-button-secondary w-full ml-2"
+            class="p-button-secondary ml-2"
             icon="pi pi-refresh"
             @click="
               () => {

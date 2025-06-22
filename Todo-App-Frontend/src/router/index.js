@@ -7,6 +7,7 @@ import ResetPasword from "@/components/ResetPasword.vue";
 import TaskList from "@/components/TaskList.vue";
 import ProjectList from "@/components/ProjectList.vue";
 import ProjectCalendar from "@/components/ProjectCalendar.vue";
+import HomePage from "@/components/HomePage.vue";
 const checkAuth = () => {
   const token = localStorage.getItem("auth_data");
   return !!token;
@@ -36,6 +37,10 @@ const routes = [
   {
     path: "/calendar",
     component: ProjectCalendar,
+  },
+  {
+    path: "/",
+    component: HomePage,
   }
 ];
 
