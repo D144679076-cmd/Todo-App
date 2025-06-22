@@ -23,12 +23,7 @@
         <Tag value="In Progress" class="bg-gray-900 text-white" />
       </div>
       <div class="flex items-start gap-3 gap-y-2">
-        <Checkbox
-          v-model="currentTask.completed"
-          :binary="true"
-          class="mt-1"
-          disabled
-        />
+        <Checkbox v-model="currentTask.completed" :binary="true" class="mt-1" />
         <div class="gap-y-4">
           <div class="font-semibold text-black">{{ currentTask.title }}</div>
           <div class="text-gray-500 text-sm mb-2">
