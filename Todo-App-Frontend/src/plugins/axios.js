@@ -1,5 +1,5 @@
+import { AuthData } from "@/composables/lib/type";
 import axios from "axios";
-
 // Get the base URL from the environment variable or use a fallback
 const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8089";
 
@@ -18,7 +18,7 @@ $api.interceptors.request.use(
     // Add authorization token if available
     const auth_data = JSON.parse(localStorage.getItem("auth_data"));
     if (auth_data) {
-      config.headers.Authorization = `Bearer ${auth_data.}`;
+      config.headers.Authorization = `Bearer ${auth_data.token}`;
     }
     return config;
   },
