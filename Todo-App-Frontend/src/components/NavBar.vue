@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import Button from "primevue/button";
 import Avatar from "primevue/avatar";
@@ -11,7 +11,7 @@ const menuItems = [
   { label: "Projects", icon: "pi pi-folder", to: "/project-list" },
   { label: "Calendar", icon: "pi pi-calendar", to: "/calendar" },
 ];
-const authData = JSON.parse(localStorage.getItem("auth_data"));
+const authData = JSON.parse(localStorage.getItem("auth_data") || "{}");
 </script>
 <template>
   <div class="navbar">

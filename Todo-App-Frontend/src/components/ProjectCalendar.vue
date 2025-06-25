@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from "vue";
 import { Button, SelectButton } from "primevue";
 const today = new Date();

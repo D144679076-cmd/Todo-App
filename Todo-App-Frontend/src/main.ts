@@ -2,19 +2,22 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import PrimeVue from "primevue/config";
-import Aura from "@primeuix/themes/aura"
+import Aura from "@primeuix/themes/aura";
 import "./assets/main.css";
-import ToastService from 'primevue/toastservice';
+import ToastService from "primevue/toastservice";
 
 const app = createApp(App);
 
 app.use(router);
-app.use(PrimeVue, { ripple: true, theme:{
+app.use(PrimeVue, {
+  ripple: true,
+  theme: {
     preset: Aura,
     options: {
-        darkModeSelector: '.my-app-dark',
-    }
-} }); // Enable ripple effect
+      darkModeSelector: ".my-app-dark",
+    },
+  },
+}); // Enable ripple effect
 app.use(ToastService);
 
 app.mount("#app");
