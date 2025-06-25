@@ -10,3 +10,6 @@ export type registeBody = {
 export type logoutBody = {
   email: string;
 };
+export type queryObject = {
+  [key: string]: string | number | boolean | undefined;
+};

@@ -37,12 +37,81 @@ model sessions {
 }
 
 model users {
-  id           String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name         String     @db.VarChar(255)
-  email        String     @unique @db.VarChar(255)
-  password     String     @db.VarChar(255)
-  role         String     @db.Uuid
-  static_token String?    @db.VarChar(1000)
-  sessions     sessions[]
-  roles        roles      @relation(fields: [role], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_role")
+  id             String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name           String           @db.VarChar(255)
+  email          String           @unique @db.VarChar(255)
+  password       String           @db.VarChar(255)
+  role           String           @db.Uuid
+  static_token   String?          @db.VarChar(1000)
+  projects_users projects_users[]
+  schedules      schedules[]
+  sessions       sessions[]
+  task_comments  task_comments[]
+  tasks          tasks[]
+  roles          roles            @relation(fields: [role], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_role")
+}
+
+model projects {
+  id               Int              @id @default(autoincrement())
+  name             String           @db.VarChar(255)
+  description      String?
+  status           String           @db.VarChar(50)
+  start_date       DateTime         @db.Timestamp(6)
+  end_date         DateTime?        @db.Timestamp(6)
+  user_id          String           @db.Uuid
+  current_progress Int              @default(0)
+  created_at       DateTime         @default(now()) @db.Timestamp(6)
+  updated_at       DateTime         @default(now()) @db.Timestamp(6)
+  projects_users   projects_users[]
+  tasks            tasks[]
+}
+
+model projects_users {
+  id         Int      @id @default(autoincrement())
+  project_id Int
+  user_id    String   @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @db.Timestamp(6)
+  projects   projects @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_project")
+  users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+}
+
+model schedules {
+  id          Int      @id @default(autoincrement())
+  user_id     String   @db.Uuid
+  title       String   @db.VarChar(255)
+  description String?
+  date        DateTime @db.Timestamp(6)
+  time        DateTime @db.Timestamp(6)
+  created_at  DateTime @default(now()) @db.Timestamp(6)
+  updated_at  DateTime @default(now()) @db.Timestamp(6)
+  type        String   @db.VarChar(50)
+  users       users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+}
+
+model task_comments {
+  id         Int      @id @default(autoincrement())
+  task_id    Int
+  user_id    String   @db.Uuid
+  comment    String
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @db.Timestamp(6)
+  tasks      tasks    @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_task")
+  users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+}
+
+model tasks {
+  id            Int             @id @default(autoincrement())
+  title         String          @db.VarChar(255)
+  description   String?
+  status        String          @db.VarChar(50)
+  priority      String          @db.VarChar(50)
+  deadline      DateTime?       @db.Timestamp(6)
+  user_id       String          @db.Uuid
+  project_id    Int
+  created_at    DateTime        @default(now()) @db.Timestamp(6)
+  updated_at    DateTime        @default(now()) @db.Timestamp(6)
+  task_comments task_comments[]
+  projects      projects        @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_project")
+  users         users           @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
 }

@@ -1,13 +1,12 @@
 <script setup>
-import { ref } from "vue";
-import Dropdown from "primevue/dropdown";
+import { ref, watch } from "vue";
 import Button from "primevue/button";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Tag from "primevue/tag";
 import { useToast } from "primevue/usetoast";
-import { Card } from "primevue";
-
+import { Card, Select } from "primevue";
+import Toast from "primevue/toast";
 const toast = useToast();
 
 // Filter options
@@ -16,9 +15,9 @@ const projects = ["Website Redesign", "Mobile App", "Marketing Campaign"];
 const deadlines = ["This Week", "This Month", "Next Month"];
 
 // Selected filter values
-const selectedPriority = ref(null);
-const selectedProject = ref(null);
-const selectedDeadline = ref(null);
+const selectedPriority = ref();
+const selectedProject = ref();
+const selectedDeadline = ref();
 const selectedTasks = ref([]);
 // Sample tasks data
 const tasks = ref([
@@ -75,7 +74,6 @@ const getStatusSeverity = (status) => {
 
 // Action handlers
 const applyFilters = () => {
-  // Implement filter logic here
   toast.add({
     severity: "info",
     summary: "Filters Applied",
@@ -95,8 +93,12 @@ const editTask = (task) => {
 const confirmDeleteTask = (task) => {
   // Implement delete confirmation logic here
 };
+watch([selectedPriority, selectedProject, selectedDeadline], () => {
+  applyFilters();
+});
 </script>
 <template>
+  <Toast />
   <div
     class="task-list-container w-full h-full flex flex-col p-0 gap-y-2 bg-gray-200"
   >
@@ -110,7 +112,7 @@ const confirmDeleteTask = (task) => {
         <div class="grid grid-cols-3 gap-4">
           <div class="filter-group">
             <label class="block mb-2 text-black">Priority</label>
-            <Dropdown
+            <Select
               v-model="selectedPriority"
               :options="priorities"
               placeholder="All Priorities"
@@ -119,7 +121,7 @@ const confirmDeleteTask = (task) => {
           </div>
           <div class="filter-group">
             <label class="block mb-2 text-black">Project</label>
-            <Dropdown
+            <Select
               v-model="selectedProject"
               :options="projects"
               placeholder="All Projects"
@@ -128,7 +130,7 @@ const confirmDeleteTask = (task) => {
           </div>
           <div class="">
             <label class="block mb-2 text-black">Deadline</label>
-            <Dropdown
+            <Select
               v-model="selectedDeadline"
               :options="deadlines"
               placeholder="All Deadlines"

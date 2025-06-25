@@ -6,6 +6,7 @@ import authRouter from "./api/auth/auth.routes.js";
 import $prisma from "./database/init.js";
 import bodyParser from "body-parser";
 import cors from "cors";
+import tasksRouter from "./api/tasks/tasks.route.js";
 configDotenv({ path: "./.env" });
 
 const app = express();
@@ -28,16 +29,10 @@ app.use(express.json());
 app.use(express.raw());
 app.use("/user", userRouter);
 app.use("/auth", authRouter);
-
+app.use("/tasks", tasksRouter);
 const initApp = () => {
-  app.get("/", (req, res) => {
-    res.status(200).json({
-      message: "Hello World",
-    });
-  });
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use("/user", userRouter);
   app.listen(env.API_PORT ?? 8055, async () => {
     await $prisma.$connect();
     console.log("Database connected");
