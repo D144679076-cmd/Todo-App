@@ -11,4 +11,9 @@ export type QueryResponse<T> = {
   refetch: () => Promise<T[]>;
   error: any;
 };
-export type Tasks = {};
+export type AuthData = {
+  token: string;
+  refreshToken: string;
+  user_id: string;
+  lifetime: number;
+};
