@@ -2,6 +2,7 @@
 import { RouterView } from "vue-router";
 import { ref } from "vue";
 import NavBar from "./components/NavBar.vue";
+import { Toast } from "primevue";
 // Reactive property to track authentication status
 const isAuthenticated = ref(false);
 
@@ -16,6 +17,7 @@ checkAuth();
 </script>
 
 <template>
+  <Toast />
   <template v-if="!isAuthenticated">
     <RouterView />
   </template>

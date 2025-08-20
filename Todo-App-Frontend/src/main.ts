@@ -15,6 +15,7 @@ app.use(PrimeVue, {
     preset: Aura,
     options: {
       darkModeSelector: ".my-app-dark",
+      cssLayer: false,
     },
   },
 }); // Enable ripple effect
