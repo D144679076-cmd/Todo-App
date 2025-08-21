@@ -225,10 +225,14 @@ const handleSubmit = () => {
           <!-- Header -->
           <div class="text-center mb-8 justify-items-center">
             <div
-              class="w-16 h-16 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg"
+              class="rounded-2xl w-16 h-16 bg-gradient-to-br flex items-center justify-center mx-auto mb-6 shadow-lg"
             >
               <!-- Mini Lynx Logo -->
-              <img src="../assets/logo.png" alt="Lynx Head" />
+              <img
+                src="../assets/logo.png"
+                alt="Lynx Head"
+                class="rounded-2xl"
+              />
             </div>
             <h2 class="text-3xl font-bold text-slate-800 mb-2">Welcome Back</h2>
             <p class="text-slate-600">Sign in to your LYNXLAB account</p>
