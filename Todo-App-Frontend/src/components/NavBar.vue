@@ -20,11 +20,7 @@ const authData = JSON.parse(localStorage.getItem("auth_data") || "{}");
         <div class="flex w-full">
           <RouterLink to="/" class="logo-text hover:opacity-70 w-full h-full">
             <div class="flex items-center gap-2">
-              <Avatar
-                shape="circle"
-                image="/public/img/Normal style.png"
-                class="flex"
-              />
+              <img src="../assets/logov2.png" class="w-7 h-7" />
               <p class="flex font-bold">Task Manager</p>
             </div>
           </RouterLink>

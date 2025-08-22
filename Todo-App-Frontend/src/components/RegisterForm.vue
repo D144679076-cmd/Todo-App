@@ -84,7 +84,7 @@ const handleSubmit = () => {
         <div
           class="w-16 h-16 flex items-center justify-center justify-items-center mb-4 rounded-2xl"
         >
-          <img src="../assets/logo.png" alt="Lynx Head" class="rounded-2xl" />
+          <img src="../assets/logov2.png" alt="Lynx Head" class="rounded-2xl" />
         </div>
         <h1 class="text-2xl font-bold text-gray-900 mb-2">
           Create Your Account
@@ -161,13 +161,12 @@ const handleSubmit = () => {
         <!-- Terms and Conditions -->
         <div class="flex items-start gap-x-3 pt-2">
           <Checkbox
-            input-id="terms"
+            input-id="termsCheckbox"
             v-model="formData.agreeToTerms"
             :binary="true"
-            class="!mt-1"
           ></Checkbox>
           <label
-            for="terms"
+            for="termsCheckbox"
             class="text-sm text-gray-600 leading-relaxed cursor-pointer"
           >
             I agree to the
@@ -297,41 +296,6 @@ const handleSubmit = () => {
 :deep(.p-card) {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* Checkbox styling */
-:deep(.p-checkbox .p-checkbox-box) {
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  border-color: #d1d5db;
-  background-color: white;
-}
-
-:deep(.p-checkbox .p-checkbox-box:hover) {
-  border-color: #06b6d4;
-}
-
-:deep(.p-checkbox .p-checkbox-box.p-highlight) {
-  background-color: #06b6d4 !important;
-  border-color: #06b6d4 !important;
-  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
-}
-
-:deep(.p-checkbox .p-checkbox-box.p-highlight:hover) {
-  background-color: #0891b2 !important;
-  border-color: #0891b2 !important;
-  box-shadow: 0 0 0 2px rgba(8, 145, 178, 0.3);
-}
-
-:deep(.p-checkbox .p-checkbox-box.p-highlight .p-checkbox-icon) {
-  color: white !important;
-  font-weight: bold;
-  font-size: 0.875rem;
-}
-
-:deep(.p-checkbox .p-checkbox-box:focus) {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
 }
 
 /* Floating label enhancements */

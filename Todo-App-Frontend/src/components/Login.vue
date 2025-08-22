@@ -228,7 +228,7 @@ const handleSubmit = () => {
             >
               <!-- Mini Lynx Logo -->
               <img
-                src="../assets/logo.png"
+                src="../assets/logov2.png"
                 alt="Lynx Head"
                 class="rounded-2xl"
               />
