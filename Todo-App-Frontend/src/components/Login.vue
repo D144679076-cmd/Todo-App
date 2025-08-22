@@ -49,7 +49,6 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <Toast position="top-right" />
   <div
     class="min-h-screen flex bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900"
   >
@@ -265,7 +264,7 @@ const handleSubmit = () => {
             <div class="space-y-2">
               <FloatLabel>
                 <InputText
-                  id="password"
+                  input-id="password"
                   v-model="password"
                   type="password"
                   class="w-full !px-4 !py-4 !border-slate-200 !rounded-xl focus:!ring-2 focus:!ring-cyan-500 focus:!border-cyan-500 !bg-white/70 !backdrop-blur-sm !transition-all !duration-300"
@@ -281,7 +280,7 @@ const handleSubmit = () => {
             <div class="flex items-center justify-between pt-2">
               <div class="flex items-center">
                 <Checkbox
-                  id="remember"
+                  input-id="remember"
                   v-model="rememberMe"
                   :binary="true"
                   class="!mr-3"

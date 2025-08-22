@@ -1,164 +1,183 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import InputText from "primevue/inputtext";
-import Select from "primevue/select";
-import Checkbox from "primevue/checkbox";
-import Button from "primevue/button";
-import $api from "@/plugins/axios";
-import DatePicker from "primevue/datepicker";
-import { useToast } from "primevue";
-import Toast from "primevue/toast";
-const toast = useToast();
-// Reactive properties for form inputs
-const fullName = ref("");
-const birthday = ref("");
-const email = ref("");
-const password = ref("");
-const gender = ref(null);
-const termsAccepted = ref(false);
-
-// Gender options
-const genderOptions = [
-  { label: "Male", value: "male" },
-  { label: "Female", value: "female" },
-  { label: "Other", value: "other" },
-];
-
-// Interest options
-const interestOptions = ["Technology", "Sports", "Arts"];
-
-// Function to handle form submission
-const handleRegister = () => {
-  if (!termsAccepted.value) {
-    alert("You must accept the terms and conditions to register.");
-    return;
-  }
-
-  console.log({
-    fullName: fullName.value,
-    birthday: birthday.value,
-    email: email.value,
-    password: password.value,
-    gender: gender.value,
-  });
-  $api
-    .post("/auth/register", {
-      fullName: fullName.value,
-      birthday: birthday.value,
-      email: email.value,
-      password: password.value,
-      gender: gender.value,
-    })
-    .then((response) => {
-      console.log("Registration successful:", response.data);
-      toast.add({
-        severity: "success",
-        summary: "Registration successful",
-        detail: "You can now log in with your credentials.",
-        life: 3000,
-      });
-      window.location.href = "/login";
-    });
-};
+import RegisterForm from "./RegisterForm.vue";
 </script>
 
 <template>
-  <Toast position="top-right" />
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div
+    class="min-h-screen flex bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900"
+  >
+    <!-- Left side - Features section -->
     <div
-      class="w-full max-w-md p-6 bg-white shadow-md rounded-lg flex flex-col gap-y-3"
+      class="flex-1 p-12 flex flex-col justify-center relative overflow-hidden w-1/2"
     >
-      <div class="text-center mb-6">
-        <i class="pi pi-user text-4xl text-gray-600"></i>
-        <h2 class="text-2xl font-bold text-gray-800">Create your account</h2>
-        <p class="text-sm text-gray-500">
-          Fill in your information to get started
-        </p>
+      <!-- Animated background elements -->
+      <div class="absolute inset-0 opacity-5">
+        <div
+          class="absolute top-1/4 left-1/4 w-64 h-64 bg-cyan-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse"
+        ></div>
+        <div
+          class="absolute top-3/4 right-1/4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"
+        ></div>
+        <div
+          class="absolute bottom-1/4 left-1/3 w-80 h-80 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-2000"
+        ></div>
       </div>
-      <div class="gap-y-3.5 flex flex-col">
-        <div class="mb-4">
-          <label for="fullName" class="block text-sm font-medium text-gray-700"
-            >Full Name</label
-          >
-          <InputText
-            id="fullName"
-            v-model="fullName"
-            placeholder="Enter your full name"
-            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-          />
+
+      <!-- Geometric pattern overlay -->
+      <div class="absolute inset-0 opacity-10">
+        <svg
+          class="w-full h-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <pattern
+              id="tech-grid"
+              width="20"
+              height="20"
+              patternUnits="userSpaceOnUse"
+            >
+              <circle
+                cx="10"
+                cy="10"
+                r="1"
+                fill="currentColor"
+                class="text-cyan-400"
+              />
+              <path
+                d="M10,0 L10,20 M0,10 L20,10"
+                stroke="currentColor"
+                stroke-width="0.2"
+                class="text-cyan-400"
+              />
+            </pattern>
+          </defs>
+          <rect width="100" height="100" fill="url(#tech-grid)" />
+        </svg>
+      </div>
+
+      <div class="relative z-10 max-w-lg flex flex-col gap-y-12">
+        <!-- Logo and Brand -->
+        <div class="mb-12">
+          <!-- LYNXLAB Logo -->
+          <div class="flex flex-col gap-y-12">
+            <div
+              class="w-24 h-24 bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl flex items-center justify-center mb-6 border border-slate-700/50 shadow-2xl"
+            >
+              <!-- Lynx Head SVG -->
+              <img
+                src="../assets/logo.png"
+                alt="Lynx Head"
+                class="rounded-3xl"
+              />
+            </div>
+            <div>
+              <h1 class="text-5xl font-bold text-white mb-4 tracking-tight">
+                Welcome to
+                <span
+                  class="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
+                  >LYNXLAB</span
+                >
+              </h1>
+              <p class="text-slate-300 text-md leading-relaxed">
+                Advanced task management with intelligent automation. Transform
+                your productivity with cutting-edge technology.
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="mb-4">
-          <label for="birthday" class="block text-sm font-medium text-gray-700"
-            >Birthday</label
-          >
-          <DatePicker
-            id="birthday"
-            v-model="birthday"
-            placeholder="dd/mm/yyyy"
-            dateFormat="dd/mm/yy"
-            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="email" class="block text-sm font-medium text-gray-700"
-            >Email address</label
-          >
-          <InputText
-            id="email"
-            v-model="email"
-            type="email"
-            placeholder="Enter your email"
-            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="password" class="block text-sm font-medium text-gray-700"
-            >Password</label
-          >
-          <InputText
-            id="password"
-            v-model="password"
-            type="password"
-            placeholder="Enter your password"
-            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="gender" class="block text-sm font-medium text-gray-700"
-            >Gender</label
-          >
-          <Select
-            id="gender"
-            v-model="gender"
-            :options="genderOptions"
-            placeholder="Select gender"
-            option-label="label"
-            option-value="value"
-            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-        <div class="mb-4">
-          <Checkbox v-model="termsAccepted" class="mr-2" binary />
-          <span class="text-sm text-gray-700">
-            I agree to the
-            <a href="#" class="text-blue-500 hover:underline">Terms</a> and
-            <a href="#" class="text-blue-500 hover:underline">Privacy Policy</a>
-          </span>
-        </div>
-        <div style="margin-top: 10px">
-          <Button
-            label="Create Account"
-            class="w-full bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            type="submit"
-            @click="handleRegister"
-          />
+
+        <!-- Features -->
+        <div class="gap-y-10 flex flex-col">
+          <!-- Feature 1 -->
+          <div class="flex items-start group gap-x-5">
+            <div
+              class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:shadow-cyan-500/25 transition-all duration-300 mr-6"
+            >
+              <i class="pi pi-bolt text-white text-xl"></i>
+            </div>
+            <div class="flex-1 pt-1">
+              <h3
+                class="text-white font-semibold text-xl mb-3 group-hover:text-cyan-300 transition-colors"
+              >
+                Lightning Fast Performance
+              </h3>
+              <p class="text-slate-300 leading-relaxed text-base">
+                Experience blazing-fast task processing with our optimized
+                algorithms and intelligent caching system.
+              </p>
+            </div>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="flex items-start group gap-x-5">
+            <div
+              class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:shadow-indigo-500/25 transition-all duration-300 mr-6"
+            >
+              <i class="pi pi-shield text-white text-xl"></i>
+            </div>
+            <div class="flex-1 pt-1">
+              <h3
+                class="text-white font-semibold text-xl mb-3 group-hover:text-indigo-300 transition-colors"
+              >
+                Enterprise Security
+              </h3>
+              <p class="text-slate-300 leading-relaxed text-base">
+                Bank-grade encryption and multi-layer security protocols protect
+                your sensitive data and workflows.
+              </p>
+            </div>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="flex items-start group gap-x-5">
+            <div
+              class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:shadow-emerald-500/25 transition-all duration-300 mr-6"
+            >
+              <i class="pi pi-sync text-white text-xl"></i>
+            </div>
+            <div class="flex-1 pt-1">
+              <h3
+                class="text-white font-semibold text-xl mb-3 group-hover:text-emerald-300 transition-colors"
+              >
+                Real-time Collaboration
+              </h3>
+              <p class="text-slate-300 leading-relaxed text-base">
+                Seamless team coordination with live updates, instant
+                notifications, and collaborative workspaces.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="mt-6 text-center">
-        <p class="text-sm text-gray-500">
-          Already have an account?
-          <a href="/login" class="text-blue-500 hover:underline">Login</a>
-        </p>
+    </div>
+
+    <!-- Right side - Login form -->
+    <div
+      class="flex-1 bg-gradient-to-br from-gray-50 to-white flex items-center justify-center p-12 relative w-1/2"
+    >
+      <!-- Subtle background pattern -->
+      <div class="absolute inset-0 opacity-5">
+        <svg class="w-full h-full" viewBox="0 0 60 60">
+          <defs>
+            <pattern
+              id="dots"
+              width="60"
+              height="60"
+              patternUnits="userSpaceOnUse"
+            >
+              <circle cx="30" cy="30" r="1.5" fill="#1e293b" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#dots)" />
+        </svg>
+      </div>
+
+      <div class="w-full max-w-md relative z-10">
+        <div class="p-8 gap-y-4 flex flex-col">
+          <!-- Header -->
+          <register-form />
+        </div>
       </div>
     </div>
   </div>
