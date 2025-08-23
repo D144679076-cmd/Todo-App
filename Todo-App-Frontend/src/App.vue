@@ -1,19 +1,39 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
-import { ref } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import NavBar from "./components/NavBar.vue";
 import { Toast } from "primevue";
-// Reactive property to track authentication status
-const isAuthenticated = ref(false);
+import { useAuth } from "./composables/useAuth";
 
-// Function to check authentication
-const checkAuth = () => {
-  const token = localStorage.getItem("auth_data");
-  isAuthenticated.value = !!token;
+const { isAuthenticated, initializeAuth, checkTokenExpiration, clearAuth } =
+  useAuth();
+
+// Function to handle auth logout event from axios interceptor
+const handleAuthLogout = () => {
+  clearAuth();
 };
 
-// Call checkAuth on component setup
-checkAuth();
+// Check token expiration periodically
+let tokenCheckInterval: NodeJS.Timeout;
+
+onMounted(() => {
+  // Initialize authentication state
+  initializeAuth();
+
+  // Check token expiration every minute
+  tokenCheckInterval = setInterval(checkTokenExpiration, 60000);
+
+  // Listen for auth logout events from axios interceptor
+  window.addEventListener("auth:logout", handleAuthLogout);
+});
+
+onUnmounted(() => {
+  // Clean up interval and event listener
+  if (tokenCheckInterval) {
+    clearInterval(tokenCheckInterval);
+  }
+  window.removeEventListener("auth:logout", handleAuthLogout);
+});
 </script>
 
 <template>
@@ -22,9 +42,18 @@ checkAuth();
     <RouterView />
   </template>
   <template v-else>
-    <header class="w-full"><NavBar class="w-full" /></header>
-    <main class="mt-16">
-      <RouterView />
+    <header
+      class="w-full h-fit fixed top-0 left-0 right-0 z-50 bg-white shadow-sm"
+    >
+      <NavBar class="w-full" />
+    </header>
+    <main
+      class="min-h-screen flex flex-col"
+      style="margin-top: calc(1rem + 0.75rem)"
+    >
+      <div class="flex-1">
+        <RouterView />
+      </div>
     </main>
     <footer></footer>
   </template>
@@ -32,7 +61,7 @@ checkAuth();
 
 <style scoped>
 header {
-  line-height: 1.5;
+  line-height: 2.5;
 }
 @media (min-width: 1024px) {
   header {

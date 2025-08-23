@@ -11,6 +11,7 @@ import { Dropdown } from "primevue";
 import { Button } from "primevue";
 import { Paginator } from "primevue";
 import { Divider } from "primevue";
+import FeatureCard from "./FeatureCard.vue";
 const statusOptions = [
   { label: "All Status", value: null },
   { label: "Active", value: "Active" },
@@ -90,7 +91,8 @@ const filteredProjects = computed(() => {
       !filters.value.status || p.status === filters.value.status;
     const dateMatch =
       !filters.value.startDate ||
-      Date.parse(new Date(p.startDate)) === Date.parse(filters.value.startDate);
+      new Date(p.startDate).getTime() ===
+        new Date(filters.value.startDate).getTime();
     return nameMatch && statusMatch && dateMatch;
   });
 });
@@ -106,19 +108,21 @@ function clearFilters() {
 function applyFilters() {
   page.value = 0;
 }
-function statusSeverity(status) {
+function statusSeverity(
+  status: string
+): "success" | "info" | "warn" | undefined {
   switch (status) {
     case "Active":
       return "success";
     case "In Progress":
       return "info";
     case "On Hold":
-      return "warning";
+      return "warn";
     default:
-      return null;
+      return undefined;
   }
 }
-function prioritySeverity(priority) {
+function prioritySeverity(priority: string): "danger" | "info" | "secondary" {
   if (priority === "High Priority") return "danger";
   if (priority === "Medium Priority") return "info";
   return "secondary";
@@ -126,6 +130,40 @@ function prioritySeverity(priority) {
 </script>
 <template>
   <div class="flex flex-col h-full w-full">
+    <!-- Projects Overview Section -->
+    <div class="text-center py-12">
+      <div class="space-y-6">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Projects Overview</h2>
+        <p class="text-gray-600 leading-relaxed max-w-2xl mx-auto">
+          Manage complex projects with team collaboration, milestone tracking,
+          and resource allocation.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6 mt-8">
+          <FeatureCard
+            icon="pi pi-bolt"
+            title="Lightning Fast Performance"
+            description="Experience blazing-fast task processing with our optimized algorithms and intelligent caching system."
+            gradient="primary"
+          />
+
+          <FeatureCard
+            icon="pi pi-shield"
+            title="Enterprise Security"
+            description="Bank-grade encryption and multi-layer security protocols protect your sensitive data and workflows."
+            gradient="accent"
+          />
+
+          <FeatureCard
+            icon="pi pi-users"
+            title="Real-time Collaboration"
+            description="Seamless team coordination with live updates, instant notifications, and collaborative workspaces."
+            gradient="success"
+          />
+        </div>
+      </div>
+    </div>
+
     <div
       class="project-list-container space-y-8 max-h-full bg-gray-200"
       style="height: 100vh; margin-top: 49px; padding: 1rem"

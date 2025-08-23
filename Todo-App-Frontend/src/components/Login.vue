@@ -10,11 +10,16 @@ import { useToast } from "primevue";
 import router from "@/router";
 import Toast from "primevue/toast";
 import FloatLabel from "primevue/floatlabel";
+import { useAuth } from "@/composables/useAuth";
+import type { AuthData } from "@/composables/lib/type";
+
 // Reactive properties for form inputs
 const email = ref("");
 const password = ref("");
 const rememberMe = ref(false);
 const toast = useToast();
+const { setAuth } = useAuth();
+
 // Function to handle form submission
 const handleSubmit = () => {
   console.log("Email:", email.value);
@@ -32,7 +37,17 @@ const handleSubmit = () => {
         detail: "Welcome back!",
         life: 3000,
       });
-      localStorage.setItem("auth_data", JSON.stringify(response.data));
+
+      // Use the auth composable to set authentication data
+      const authData: AuthData = {
+        token: response.data.token,
+        refreshToken: response.data.refreshToken,
+        user_id: response.data.user_id,
+        userEmail: email.value, // Store the user email for logout
+        lifetime: Date.now() + response.data.lifeTime, // Convert to absolute timestamp
+      };
+      setAuth(authData);
+
       window.location.href = "/";
     })
     .catch((error) => {

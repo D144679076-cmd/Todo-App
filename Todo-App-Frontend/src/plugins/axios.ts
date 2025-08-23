@@ -1,5 +1,6 @@
 import { AuthData } from "@/composables/lib/type";
 import axios from "axios";
+
 // Get the base URL from the environment variable or use a fallback
 const baseURL = "http://localhost:8089";
 
@@ -19,10 +20,8 @@ $api.interceptors.request.use(
     const auth_data: AuthData = JSON.parse(
       localStorage.getItem("auth_data") || "{}"
     );
-    if (auth_data) {
-      if (!config.headers) {
-        config.headers = {};
-      }
+    if (auth_data?.token) {
+      config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${auth_data.token}`;
     }
     return config;
@@ -40,7 +39,16 @@ $api.interceptors.response.use(
   (error) => {
     // Handle errors globally
     if (error.response && error.response.status === 401) {
-      console.error("Unauthorized! Redirecting to login...");
+      console.error(
+        "Unauthorized! Token expired or invalid, redirecting to login..."
+      );
+
+      // Clear authentication data
+      localStorage.removeItem("auth_data");
+
+      // Dispatch a custom event to notify components about logout
+      window.dispatchEvent(new CustomEvent("auth:logout"));
+
       // Optionally redirect to login page
       window.location.href = "/dang-nhap";
     }
