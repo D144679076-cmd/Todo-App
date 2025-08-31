@@ -248,7 +248,7 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
   min-height: 100vh;
   width: 100vw;
   padding: 0;
-  margin-top: 49px; /* Adjust based on your navbar height */
+  margin-top: 21px; /* Adjust based on your navbar height */
   max-width: 100%;
 }
 

@@ -59,7 +59,7 @@ const handleToggleDeadline = (id: string) => {
             </div>
 
             <div
-              class="flex items-center space-x-1 text-sm text-muted-foreground"
+              class="flex items-center gap-x-1 text-sm text-muted-foreground"
             >
               <i class="pi pi-clock h-4 w-4"></i>
               <span>{{ deadline.time }}</span>

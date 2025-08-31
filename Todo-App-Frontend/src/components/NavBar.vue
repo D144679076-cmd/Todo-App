@@ -70,7 +70,7 @@ const toggleUserMenu = (event: Event) => {
 </script>
 <template>
   <div
-    class="navbar w-full h-fit py-2 !bg-gradient-to-br !from-cyan-500 !via-cyan-800 !to-blue-500"
+    class="navbar w-full h-fit py-2 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900"
   >
     <div class="mx-auto px-6 py-3 w-full">
       <div class="flex items-center justify-between h-14 w-full">
@@ -142,7 +142,6 @@ const toggleUserMenu = (event: Event) => {
   max-height: 49px;
 }
 
-/* Menubar Custom Styling */
 :deep(.p-menubar) {
   border: none;
   background: transparent;
@@ -153,13 +152,26 @@ const toggleUserMenu = (event: Event) => {
   border: none;
   background: transparent;
   gap: 0.5rem;
-  padding: 0.375rem;
   margin: 0;
   list-style: none;
 }
 
 :deep(.p-menubar-item) {
   margin: 0;
+}
+
+:deep(.p-menubar-item.p-focus .p-menubar-item-link) {
+  padding: 0.625rem 1.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  background: transparent;
+  color: rgb(30, 41, 59);
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
 }
 
 :deep(.p-menubar-item-link) {
@@ -183,27 +195,10 @@ const toggleUserMenu = (event: Event) => {
   transform: scale(1.02);
 }
 
-:deep(.p-menubar-item.p-highlight .p-menubar-item-link) {
-  background: linear-gradient(to right, rgb(59, 130, 246), rgb(147, 51, 234));
-  color: white;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  transform: scale(1.05);
-}
-
 :deep(.p-menubar-item-icon) {
   margin-right: 0.5rem;
   color: white;
 }
-
-/* Hide submenu indicators */
-:deep(.p-menubar-submenu-icon) {
-  display: none;
-}
-
-:deep(.p-menubar-submenu) {
-  display: none !important;
-}
-
 /* Smooth transitions for all interactive elements */
 button {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

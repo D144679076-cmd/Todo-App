@@ -259,7 +259,9 @@ const handleToggleTodo = (id: string) => {
                 <div class="text-2xl font-bold text-green-400 mb-1">
                   {{ stats.completed }}
                 </div>
-                <div class="text-sm text-muted-foreground">Completed</div>
+                <div class="text-sm text-muted-foreground text-white">
+                  Completed
+                </div>
               </div>
             </template>
           </Card>
@@ -285,7 +287,7 @@ const handleToggleTodo = (id: string) => {
           >
           </Menubar>
 
-          <div class="flex items-center gap-x-2">
+          <!-- <div class="flex items-center gap-x-2">
             <Button variant="outlined" size="small">
               <i class="pi pi-search mr-2"></i>
               Search
@@ -294,7 +296,7 @@ const handleToggleTodo = (id: string) => {
               <i class="pi pi-filter mr-2"></i>
               Filter
             </Button>
-          </div>
+          </div> -->
         </div>
 
         <!-- Todo List -->
