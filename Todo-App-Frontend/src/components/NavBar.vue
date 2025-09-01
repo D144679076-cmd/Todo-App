@@ -70,7 +70,7 @@ const toggleUserMenu = (event: Event) => {
 </script>
 <template>
   <div
-    class="navbar w-full h-fit py-2 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900"
+    class="navbar w-full h-fit py-2 bg-gradient-to-br from-slate-500 via-blue-500 to-slate-300"
   >
     <div class="mx-auto px-6 py-3 w-full">
       <div class="flex items-center justify-between h-14 w-full">
@@ -102,13 +102,13 @@ const toggleUserMenu = (event: Event) => {
         <!-- Action Buttons -->
         <div class="flex items-center gap-x-1">
           <Button
-            class="text-white hover:text-slate-700 hover:bg-white/60 rounded-xl w-fit h-fit !p-0"
+            class="!text-slate-800 hover:text-slate-700 hover:bg-white/60 rounded-xl hover:opacity-80 w-fit h-fit !p-0"
             aria-label="Notifications"
             icon="pi pi-bell"
             text
           />
           <Button
-            class="text-white hover:text-slate-700 hover:bg-white/60 rounded-xl w-fit h-fit !p-0"
+            class="!text-slate-800 hover:text-slate-700 hover:bg-white/60 hover:opacity-80 rounded-xl w-fit h-fit !p-0"
             aria-label="User Profile"
             icon="pi pi-user"
             text

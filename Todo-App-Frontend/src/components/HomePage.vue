@@ -239,7 +239,7 @@ const handleToggleTodo = (id: string) => {
 
         <!-- Stats Cards -->
         <div class="grid grid-cols-3 gap-4">
-          <Card>
+          <Card class="!bg-slate-800 !text-white">
             <template #content>
               <div class="p-4 text-center">
                 <div class="text-2xl font-bold text-primary mb-1">
@@ -249,7 +249,7 @@ const handleToggleTodo = (id: string) => {
               </div>
             </template>
           </Card>
-          <Card>
+          <Card class="!bg-slate-800 !text-white">
             <template #content>
               <div class="p-4 text-center">
                 <div class="text-2xl font-bold text-green-400 mb-1">
@@ -261,7 +261,7 @@ const handleToggleTodo = (id: string) => {
               </div>
             </template>
           </Card>
-          <Card>
+          <Card class="!bg-slate-800 !text-white">
             <template #content>
               <div class="p-4 text-center">
                 <div class="text-2xl font-bold text-yellow-400 mb-1">
@@ -292,7 +292,7 @@ const handleToggleTodo = (id: string) => {
         <!-- Todo List -->
         <div class="gap-y-3 flex flex-col">
           <template v-if="filteredTodos.length === 0">
-            <Card class="text-white">
+            <Card class="!bg-slate-800 !text-white">
               <template #content>
                 <div class="p-8 text-center">
                   <i

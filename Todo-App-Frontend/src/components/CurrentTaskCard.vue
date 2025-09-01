@@ -49,11 +49,11 @@ const statusIcon = computed(() => {
 </script>
 
 <template>
-  <Card>
+  <Card class="!bg-slate-800">
     <template #content>
       <div class="p-6">
         <!-- Header with title and status badge -->
-        <div class="flex justify-between mb-4 gap-y-2">
+        <div class="flex justify-between mb-4 gap-y-2 text-white">
           <h3 class="text-lg font-bold">Current Task</h3>
           <div
             class="px-3 py-1 rounded-full text-xs font-medium border"
@@ -66,7 +66,7 @@ const statusIcon = computed(() => {
 
         <!-- Task details -->
         <div class="gap-y-4 flex flex-col">
-          <h4 class="font-bold text-base">{{ title }}</h4>
+          <h4 class="font-bold text-base text-gray-400">{{ title }}</h4>
           <p class="text-sm leading-relaxed text-gray-300">{{ description }}</p>
 
           <!-- Time information -->

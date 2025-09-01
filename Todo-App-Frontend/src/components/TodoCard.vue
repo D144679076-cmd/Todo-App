@@ -23,7 +23,7 @@ const handleToggle = () => {
 };
 </script>
 <template>
-  <Card @click="handleToggle">
+  <Card @click="handleToggle" class="!bg-slate-800 !text-white">
     <template #content>
       <div class="p-4 flex flex-col gap-y-3">
         <div class="flex items-start justify-between">

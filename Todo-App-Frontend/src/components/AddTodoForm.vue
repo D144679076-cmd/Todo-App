@@ -54,7 +54,7 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <Card>
+  <Card class="!bg-slate-800 !text-white">
     <template #content>
       <div class="p-6 flex flex-col gap-y-8">
         <!-- Header -->

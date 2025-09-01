@@ -25,7 +25,7 @@ const handleToggleDeadline = (id: string) => {
 };
 </script>
 <template>
-  <Card>
+  <Card class="!bg-slate-800 !text-white">
     <template #content>
       <div class="p-6">
         <h3 class="text-lg font-semibold text-foreground mb-4">

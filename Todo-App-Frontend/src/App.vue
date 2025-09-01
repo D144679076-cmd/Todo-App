@@ -36,7 +36,7 @@ onUnmounted(() => {
 });
 </script>
 
-<template>
+<template class="my-app-dark">
   <Toast position="top-right" />
   <template v-if="!isAuthenticated">
     <RouterView />

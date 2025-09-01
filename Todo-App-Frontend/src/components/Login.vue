@@ -235,7 +235,7 @@ const handleSubmit = () => {
       </div>
 
       <div class="w-full max-w-md relative z-10">
-        <div class="p-8 gap-y-4 flex flex-col">
+        <div class="p-8 gap-y-5 flex flex-col">
           <!-- Header -->
           <div class="text-center mb-8 justify-items-center">
             <div
@@ -254,7 +254,7 @@ const handleSubmit = () => {
 
           <form
             @submit.prevent="handleSubmit"
-            class="gap-y-5 flex flex-col mt-4"
+            class="gap-y-5 flex flex-col mt-6"
           >
             <div class="flex flex-col gap-y-6">
               <!-- Email Field -->

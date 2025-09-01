@@ -1,7 +1,7 @@
 <template>
-  <Card>
+  <Card class="!bg-slate-800">
     <template #content>
-      <div class="p-6">
+      <div class="p-6 flex flex-col gap-y-4">
         <h3 class="text-lg font-semibold text-white mb-4">Today's Schedule</h3>
 
         <Timeline
