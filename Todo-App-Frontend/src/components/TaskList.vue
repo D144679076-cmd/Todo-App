@@ -116,14 +116,14 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
   >
     <!-- Filters Section -->
     <div
-      class="filters mb-4 px-8 py-8 bg-white"
+      class="filters mb-4 px-8 py-8 bg-gradient-to-br from-slate-700 via-blue-700 to-slate-700"
       style="margin: 16px; border-radius: 8px"
     >
       <div class="flex flex-col gap-y-4 w-full">
-        <h2 class="text-xl font-bold mb-3 text-black">Filters</h2>
+        <h2 class="text-xl font-bold mb-3 text-white">Filters</h2>
         <div class="grid grid-cols-3 gap-4">
-          <div class="filter-group">
-            <label class="block mb-2 text-black">Priority</label>
+          <div class="filter-group flex flex-col gap-y-2">
+            <label class="block mb-2 text-white">Priority</label>
             <Select
               v-model="selectedPriority"
               :options="priorities"
@@ -131,8 +131,8 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
               class="w-full"
             />
           </div>
-          <div class="filter-group">
-            <label class="block mb-2 text-black">Project</label>
+          <div class="filter-group flex flex-col gap-y-2">
+            <label class="block mb-2 text-white">Project</label>
             <Select
               v-model="selectedProject"
               :options="projects"
@@ -140,8 +140,8 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
               class="w-full"
             />
           </div>
-          <div class="">
-            <label class="block mb-2 text-black">Deadline</label>
+          <div class="filter-group flex flex-col gap-y-2">
+            <label class="block mb-2 text-white">Deadline</label>
             <Select
               v-model="selectedDeadline"
               :options="deadlines"
@@ -153,7 +153,7 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
         <div class="filter-group items-end gap-2 flex justify-end">
           <Button
             label="Reset Filters"
-            class="p-button-secondary ml-2"
+            class="ml-2"
             icon="pi pi-refresh"
             @click="
               () => {
@@ -168,15 +168,18 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
     </div>
 
     <!-- Tasks Section -->
-    <div style="margin: 16px; border-radius: 8px" class="bg-white">
+    <div
+      style="margin: 16px; border-radius: 8px"
+      class="bg-gradient-to-br from-slate-700 via-blue-700 to-slate-700"
+    >
       <div class="tasks flex-1 flex flex-col px-8 gap-y-3 py-8">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-bold text-black">Tasks</h2>
+          <h2 class="text-xl font-bold text-white">Tasks</h2>
           <div class="flex gap-2">
             <Button
               label="Edit"
               icon="pi pi-pencil"
-              class="p-button-secondary mr-2"
+              outlined
               @click="editTask(selectedTasks)"
               v-bind:disabled="selectedTasks.length <= 0"
             />
@@ -195,7 +198,7 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
             :paginator="true"
             :rows="10"
             responsiveLayout="scroll"
-            class="p-datatable-sm h-full w-full"
+            class="h-full w-full"
             style="min-height: 400px; height: 100%"
             v-model:selection="selectedTasks"
           >
@@ -265,9 +268,9 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
 }
 
 :deep(.p-datatable) {
-  border-radius: 8px;
   overflow: hidden;
   height: 100%;
+  border-radius: 8px 8px;
 }
 
 :deep(.p-datatable-wrapper) {
@@ -280,5 +283,8 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
 
 :deep(.p-tag) {
   font-size: 0.875rem;
+}
+:deep(.p-paginator) {
+  border-radius: 0px 0px 8px 8px;
 }
 </style>

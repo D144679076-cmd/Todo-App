@@ -172,10 +172,12 @@ function prioritySeverity(priority: string): "danger" | "info" | "secondary" {
       v-else
     >
       <!-- Filters -->
-      <div class="filters bg-white rounded-lg shadow p-6 mb-8">
+      <div
+        class="filters bg-gradient-to-br from-slate-700 via-blue-700 to-slate-800 rounded-lg shadow p-6 mb-8"
+      >
         <div class="grid grid-cols-3 gap-4">
-          <div>
-            <span class="text-sm font-bold mb-4 text-black">
+          <div class="flex flex-col gap-y-2">
+            <span class="text-sm font-bold mb-4 text-white">
               Project name
             </span>
             <InputText
@@ -184,8 +186,8 @@ function prioritySeverity(priority: string): "danger" | "info" | "secondary" {
               class="pl-10 w-full mt-2"
             />
           </div>
-          <div>
-            <span class="text-sm font-bold mb-4 text-black"> Start date </span>
+          <div class="flex flex-col gap-y-2">
+            <span class="text-sm font-bold mb-4 text-white"> Start date </span>
             <Calendar
               v-model="filters.startDate"
               placeholder="dd/mm/yyyy"
@@ -194,8 +196,8 @@ function prioritySeverity(priority: string): "danger" | "info" | "secondary" {
               class="w-full"
             />
           </div>
-          <div>
-            <span class="text-sm font-bold mb-4 text-black"> Status </span>
+          <div class="flex flex-col gap-y-2">
+            <span class="text-sm font-bold mb-4 text-white"> Status </span>
             <Dropdown
               v-model="filters.status"
               :options="statusOptions"
@@ -207,12 +209,7 @@ function prioritySeverity(priority: string): "danger" | "info" | "secondary" {
           </div>
         </div>
         <div class="flex justify-end mt-2" style="gap: 10px; margin-top: 8px">
-          <Button
-            label="Clear"
-            @click="clearFilters"
-            icon="pi pi-refresh"
-            outlined
-          />
+          <Button label="Clear" @click="clearFilters" icon="pi pi-refresh" />
         </div>
       </div>
       <div
@@ -279,7 +276,7 @@ function prioritySeverity(priority: string): "danger" | "info" | "secondary" {
 
       <!-- Pagination -->
       <div class="flex justify-between items-center" style="margin-top: 16px">
-        <div class="text-sm text-gray-500">
+        <div class="text-sm text-white">
           Showing {{ page * 4 + 1 }} to
           {{ Math.min((page + 1) * 4, filteredProjects.length) }} of
           {{ filteredProjects.length }} projects

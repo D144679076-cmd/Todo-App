@@ -379,22 +379,22 @@ function eventsForDayHour(date: Date, hour: string) {
       </div>
       <!-- Legend -->
       <div
-        class="flex items-center bg-white rounded-xl p-4 gap-x-3.5"
+        class="flex items-center rounded-xl p-4 gap-x-3.5"
         style="margin-top: 12px"
       >
         <div class="flex items-center gap-x-2">
           <span class="w-4 h-4 rounded bg-gray-100 inline-block"></span>
-          <span class="text-sm text-gray-500">Meetings</span>
+          <span class="text-sm text-white">Meetings</span>
         </div>
         <div class="flex items-center gap-x-2">
           <span class="w-4 h-4 rounded bg-gray-900 inline-block"></span>
-          <span class="text-sm text-gray-500">Deadlines</span>
+          <span class="text-sm text-white">Deadlines</span>
         </div>
         <div class="flex items-center gap-x-2">
           <span
             class="w-4 h-4 rounded border border-blue-200 bg-blue-100 inline-block"
           ></span>
-          <span class="text-sm text-gray-500">Today</span>
+          <span class="text-sm text-white">Today</span>
         </div>
       </div>
     </div>
