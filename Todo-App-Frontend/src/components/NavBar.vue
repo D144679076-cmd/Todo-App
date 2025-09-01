@@ -97,18 +97,18 @@ const toggleUserMenu = (event: Event) => {
         </RouterLink>
 
         <!-- Navigation Tabs -->
-        <Menubar :model="menuItems" class="rounded-2xl !text-white" />
+        <Menubar :model="menuItems" class="rounded-2xl" />
 
         <!-- Action Buttons -->
         <div class="flex items-center gap-x-1">
           <Button
-            class="!text-white hover:text-slate-700 hover:bg-white/60 rounded-xl w-fit h-fit"
+            class="text-white hover:text-slate-700 hover:bg-white/60 rounded-xl w-fit h-fit !p-0"
             aria-label="Notifications"
             icon="pi pi-bell"
             text
           />
           <Button
-            class="!text-white hover:text-slate-700 hover:bg-white/60 rounded-xl w-fit h-fit relative"
+            class="text-white hover:text-slate-700 hover:bg-white/60 rounded-xl w-fit h-fit !p-0"
             aria-label="User Profile"
             icon="pi pi-user"
             text
@@ -133,7 +133,6 @@ const toggleUserMenu = (event: Event) => {
   align-items: center;
   padding: 0.5rem 2rem;
   background-color: #ffffff;
-  border-bottom: 1px solid #f0f0f0;
   width: 100%;
   position: fixed;
   top: 0;
@@ -198,42 +197,5 @@ const toggleUserMenu = (event: Event) => {
 :deep(.p-menubar-item-icon) {
   margin-right: 0.5rem;
   color: white;
-}
-/* Smooth transitions for all interactive elements */
-button {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Enhanced hover effects */
-button:hover {
-  transform: translateY(-1px);
-}
-
-/* Custom focus states with better accessibility */
-button:focus {
-  border-radius: 0.75rem;
-}
-
-/* Gradient text for webkit browsers */
-.bg-clip-text {
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-/* Backdrop blur support */
-.backdrop-blur-sm {
-  backdrop-filter: blur(4px);
-}
-
-/* Mobile responsive adjustments */
-@media (max-width: 768px) {
-  .navbar {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  .h-14 {
-    height: 3rem;
-  }
 }
 </style>

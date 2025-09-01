@@ -1,11 +1,29 @@
+<script setup lang="ts">
+import { defineProps, defineEmits, computed } from "vue";
+import Card from "primevue/card";
+import Badge from "primevue/badge";
+
+interface TodoCardProps {
+  id: string;
+  title: string;
+  description?: string;
+  completed: boolean;
+  priority: "low" | "medium" | "high";
+  dueDate?: string;
+}
+
+const props = defineProps<TodoCardProps>();
+
+const emit = defineEmits<{
+  toggle: [id: string];
+}>();
+
+const handleToggle = () => {
+  emit("toggle", props.id);
+};
+</script>
 <template>
-  <Card
-    :class="[
-      '!bg-gradient-to-br !from-slate-800 !to-slate-800 !text-white backdrop-blur-sm border-border/50 shadow-card transition-smooth hover:shadow-lg cursor-pointer',
-      completed && 'opacity-75',
-    ]"
-    @click="handleToggle"
-  >
+  <Card @click="handleToggle">
     <template #content>
       <div class="p-4 flex flex-col gap-y-3">
         <div class="flex items-start justify-between">
@@ -38,11 +56,8 @@
             </div>
           </div>
           <div class="flex items-center gap-x-2">
-            <Badge
-              :class="priorityColors[priority]"
-              class="flex items-center space-x-1"
-            >
-              <i class="pi pi-star-fill text-xs"></i>
+            <Badge class="flex items-center gap-x-1">
+              <i class="pi pi-star-fill"></i>
               <span>{{ priority }}</span>
             </Badge>
           </div>
@@ -59,38 +74,6 @@
     </template>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { defineProps, defineEmits, computed } from "vue";
-import Card from "primevue/card";
-import Badge from "primevue/badge";
-
-interface TodoCardProps {
-  id: string;
-  title: string;
-  description?: string;
-  completed: boolean;
-  priority: "low" | "medium" | "high";
-  dueDate?: string;
-}
-
-const props = defineProps<TodoCardProps>();
-
-const emit = defineEmits<{
-  toggle: [id: string];
-}>();
-
-const priorityColors = computed(() => ({
-  low: "bg-green-500/20 text-green-400 border-green-500/30",
-  medium: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-  high: "bg-red-500/20 text-red-400 border-red-500/30",
-}));
-
-const handleToggle = () => {
-  emit("toggle", props.id);
-};
-</script>
-
 <style scoped>
 .transition-smooth {
   transition: all 0.2s ease-in-out;

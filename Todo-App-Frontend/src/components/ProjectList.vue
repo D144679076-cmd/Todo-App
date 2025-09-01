@@ -129,9 +129,11 @@ function prioritySeverity(priority: string): "danger" | "info" | "secondary" {
 }
 </script>
 <template>
-  <div class="flex flex-col h-full w-full">
+  <div
+    class="flex flex-col h-full w-full bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900"
+  >
     <!-- Projects Overview Section -->
-    <div class="text-center py-12">
+    <div class="text-center py-12" v-if="paginatedProjects.length <= 0">
       <div class="space-y-6">
         <h2 class="text-3xl font-bold text-gray-900 mb-2">Projects Overview</h2>
         <p class="text-gray-600 leading-relaxed max-w-2xl mx-auto">
@@ -165,8 +167,9 @@ function prioritySeverity(priority: string): "danger" | "info" | "secondary" {
     </div>
 
     <div
-      class="project-list-container space-y-8 max-h-full bg-gray-200"
-      style="height: 100vh; margin-top: 49px; padding: 1rem"
+      class="project-list-container space-y-8 max-h-full"
+      style="height: 100vh; margin-top: 21px; padding: 1rem"
+      v-else
     >
       <!-- Filters -->
       <div class="filters bg-white rounded-lg shadow p-6 mb-8">

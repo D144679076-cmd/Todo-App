@@ -25,9 +25,7 @@ const handleToggleDeadline = (id: string) => {
 };
 </script>
 <template>
-  <Card
-    class="!bg-gradient-to-br !from-slate-800 !to-slate-800 !text-white backdrop-blur-sm border-border/50 shadow-card"
-  >
+  <Card>
     <template #content>
       <div class="p-6">
         <h3 class="text-lg font-semibold text-foreground mb-4">
@@ -38,7 +36,7 @@ const handleToggleDeadline = (id: string) => {
           <div
             v-for="deadline in deadlines"
             :key="deadline.id"
-            class="!bg-gradient-to-br !from-slate-600 !to-slate-700 flex items-center justify-between p-3 rounded-lg bg-secondary/30 hover:bg-secondary/40 transition-smooth"
+            class="flex items-center justify-between p-3 rounded-lg bg-secondary/30 hover:bg-secondary/40 transition-smooth"
           >
             <div class="flex items-center gap-x-3">
               <Checkbox

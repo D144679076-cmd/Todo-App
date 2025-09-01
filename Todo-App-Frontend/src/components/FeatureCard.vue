@@ -13,29 +13,14 @@ interface FeatureCardProps {
 const props = withDefaults(defineProps<FeatureCardProps>(), {
   gradient: "primary",
 });
-
-// Gradient classes mapping
-const gradientClasses = computed(() => {
-  const gradients = {
-    primary: "bg-gradient-to-br from-blue-500 to-purple-600",
-    accent: "bg-gradient-to-br from-purple-500 to-pink-600",
-    success: "bg-gradient-to-br from-green-500 to-emerald-600",
-  };
-  return gradients[props.gradient];
-});
 </script>
 
 <template>
-  <Card
-    class="bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out group hover:scale-105"
-  >
+  <Card>
     <template #content>
       <div class="p-6 space-y-4">
         <div
-          :class="[
-            'w-12 h-12 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 ease-bounce',
-            gradientClasses,
-          ]"
+          class="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 ease-bounce"
         >
           <i :class="[props.icon, 'text-white text-xl']" />
         </div>

@@ -43,15 +43,15 @@ onUnmounted(() => {
   </template>
   <template v-else>
     <header
-      class="w-full h-fit fixed top-0 left-0 right-0 z-50 bg-white shadow-sm"
+      class="w-full h-fit fixed top-0 left-0 right-0 z-50 bg-white shadow-sm bottom-0"
     >
-      <NavBar class="w-full" />
+      <NavBar class="w-full h-full" />
     </header>
     <main
       class="min-h-screen flex flex-col"
       style="margin-top: calc(1rem + 0.75rem)"
     >
-      <div class="flex-1">
+      <div>
         <RouterView />
       </div>
     </main>

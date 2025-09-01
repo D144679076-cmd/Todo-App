@@ -49,14 +49,12 @@ const statusIcon = computed(() => {
 </script>
 
 <template>
-  <Card
-    class="!bg-gradient-to-br !from-slate-800 !to-slate-800 !text-white !backdrop-blur-sm !border !border-gray-200/50 !shadow-lg"
-  >
+  <Card>
     <template #content>
-      <div class="!p-6">
+      <div class="p-6">
         <!-- Header with title and status badge -->
-        <div class="flex justify-between !mb-4 gap-y-2">
-          <h3 class="text-lg !font-bold">Current Task</h3>
+        <div class="flex justify-between mb-4 gap-y-2">
+          <h3 class="text-lg font-bold">Current Task</h3>
           <div
             class="px-3 py-1 rounded-full text-xs font-medium border"
             :class="[statusColors.bg, statusColors.text, statusColors.border]"
@@ -68,7 +66,7 @@ const statusIcon = computed(() => {
 
         <!-- Task details -->
         <div class="gap-y-4 flex flex-col">
-          <h4 class="!font-bold text-base">{{ title }}</h4>
+          <h4 class="font-bold text-base">{{ title }}</h4>
           <p class="text-sm leading-relaxed text-gray-300">{{ description }}</p>
 
           <!-- Time information -->
@@ -90,22 +88,14 @@ const statusIcon = computed(() => {
               label="Mark Complete"
               icon="pi pi-check"
               size="small"
-              class="!bg-gradient-to-r !from-green-600 !to-green-700 hover:!from-green-700 hover:!to-green-800 !text-white !font-medium !py-2 !px-4 !rounded-lg !transition-all !duration-300 !shadow-sm hover:!shadow-green-500/25 !border-0"
             />
             <Button
               v-if="status === 'Pending'"
               label="Start Task"
               icon="pi pi-play"
               size="small"
-              class="!bg-gradient-to-r !from-cyan-600 !to-blue-600 hover:!from-cyan-700 hover:!to-blue-700 !text-white !font-medium !py-2 !px-4 !rounded-lg !transition-all !duration-300 !shadow-sm hover:!shadow-cyan-500/25 !border-0"
             />
-            <Button
-              label="Edit"
-              icon="pi pi-pencil"
-              size="small"
-              outlined
-              class="!text-gray-300 hover:!bg-slate-600 hover:!text-white hover:!border-slate-500 !font-medium !py-2 !px-4 !rounded-lg !border-gray-400 !transition-all !duration-300"
-            />
+            <Button label="Edit" icon="pi pi-pencil" size="small" outlined />
           </div>
         </div>
       </div>
@@ -154,14 +144,5 @@ const statusIcon = computed(() => {
   );
   backdrop-filter: blur(10px);
   border: 1px solid rgba(229, 231, 235, 0.5);
-}
-
-/* Icon animations */
-.pi {
-  transition: all 0.3s ease;
-}
-
-.pi:hover {
-  transform: scale(1.1);
 }
 </style>

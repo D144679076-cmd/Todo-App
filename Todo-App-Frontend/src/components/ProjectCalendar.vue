@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { Button, SelectButton } from "primevue";
+
+interface Event {
+  id: number;
+  date: string;
+  title: string;
+  type: string;
+  icon: string;
+  time?: string;
+}
+
 const today = new Date();
 const currentMonth = ref(today.getMonth());
 const currentYear = ref(today.getFullYear());
@@ -16,13 +26,14 @@ const days = [
   "Saturday",
 ];
 
-const events = ref([
+const events = ref<Event[]>([
   {
     id: 1,
     date: "2025-01-01",
     title: "Team Meeting 9AM",
     type: "meeting",
     icon: "pi pi-circle-fill text-xs",
+    time: "9:00",
   },
   {
     id: 2,
@@ -37,6 +48,7 @@ const events = ref([
     title: "Client Call 2PM",
     type: "meeting",
     icon: "pi pi-users",
+    time: "14:00",
   },
   {
     id: 4,
@@ -44,6 +56,7 @@ const events = ref([
     title: "Presentation",
     type: "meeting",
     icon: "pi pi-circle-fill text-xs",
+    time: "10:00",
   },
   {
     id: 5,
@@ -58,6 +71,7 @@ const events = ref([
     title: "All Hands 10AM",
     type: "meeting",
     icon: "pi pi-calendar",
+    time: "10:00",
   },
   {
     id: 7,
@@ -72,6 +86,7 @@ const events = ref([
     title: "Partnership Meet",
     type: "meeting",
     icon: "pi pi-users",
+    time: "15:00",
   },
   {
     id: 9,
@@ -89,10 +104,10 @@ const monthYear = computed(() => {
   );
 });
 
-function daysInMonth(year, month) {
+function daysInMonth(year: number, month: number) {
   return new Date(year, month + 1, 0).getDate();
 }
-function firstDayOfMonth(year, month) {
+function firstDayOfMonth(year: number, month: number) {
   return new Date(year, month, 1).getDay();
 }
 
@@ -123,14 +138,14 @@ const calendarDays = computed(() => {
   return daysArr;
 });
 
-function isToday(date) {
+function isToday(date: Date) {
   return (
     date.getDate() === today.getDate() &&
     date.getMonth() === today.getMonth() &&
     date.getFullYear() === today.getFullYear()
   );
 }
-function eventsForDate(date) {
+function eventsForDate(date: Date) {
   const dStr = date.toISOString().slice(0, 10);
   return events.value.filter((e) => e.date === dStr);
 }
@@ -174,29 +189,29 @@ const weekDays = computed(() => {
 });
 const dayHours = Array.from({ length: 24 }, (_, i) => `${i}:00`);
 
-function setToWeek(date) {
+function setToWeek(date: Date) {
   selectedDate.value = new Date(date);
 }
-function setToDay(date) {
+function setToDay(date: Date) {
   selectedDate.value = new Date(date);
 }
-function eventsForWeekDay(date, hour) {
+function eventsForWeekDay(date: Date, hour: string) {
   const dStr = date.toISOString().slice(0, 10);
   return events.value.filter(
-    (e) => e.date === dStr && (!e.time || e.time.startsWith(hour))
+    (e) => e.date === dStr && (!e.time || e.time.startsWith(hour.split(":")[0]))
   );
 }
-function eventsForDayHour(date, hour) {
+function eventsForDayHour(date: Date, hour: string) {
   const dStr = date.toISOString().slice(0, 10);
   return events.value.filter(
-    (e) => e.date === dStr && (!e.time || e.time.startsWith(hour))
+    (e) => e.date === dStr && (!e.time || e.time.startsWith(hour.split(":")[0]))
   );
 }
 </script>
 <template>
   <div
     class="bg-gray-50 min-h-screen p-8 max-w-screen"
-    style="margin-top: 49px"
+    style="margin-top: 21px"
   >
     <div class="mx-auto">
       <!-- Header -->
@@ -221,7 +236,6 @@ function eventsForDayHour(date, hour) {
           <Button label="Today" class="p-button-outlined" @click="goToday" />
           <SelectButton
             v-model="view"
-            @change="view = $event.value"
             :options="selectButtonSelect"
             option-label="label"
             option-value="value"
@@ -387,4 +401,5 @@ function eventsForDayHour(date, hour) {
   </div>
 </template>
 
+<style scoped></style>
 <style scoped></style>

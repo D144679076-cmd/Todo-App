@@ -1,7 +1,5 @@
 <template>
-  <Card
-    class="!bg-gradient-to-br !from-slate-800 !to-slate-800 !text-white backdrop-blur-sm border-border/50 shadow-card"
-  >
+  <Card>
     <template #content>
       <div class="p-6">
         <h3 class="text-lg font-semibold text-white mb-4">Today's Schedule</h3>

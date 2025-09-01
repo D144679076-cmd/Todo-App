@@ -256,39 +256,41 @@ const handleSubmit = () => {
             @submit.prevent="handleSubmit"
             class="gap-y-5 flex flex-col mt-4"
           >
-            <!-- Email Field -->
-            <div class="space-y-2">
-              <FloatLabel>
-                <InputText
-                  id="email"
-                  v-model="email"
-                  type="email"
-                  class="w-full !px-4 !py-4 !border-slate-200 !rounded-xl focus:!ring-2 focus:!ring-cyan-500 focus:!border-cyan-500 !bg-white/70 !backdrop-blur-sm !transition-all !duration-300"
-                  :class="{
-                    '!border-red-300 focus:!border-red-500 focus:!ring-red-500': false,
-                  }"
-                  required
-                />
-                <label for="email" class="!text-slate-600 !font-medium"
-                  >Email Address</label
-                >
-              </FloatLabel>
-            </div>
+            <div class="flex flex-col gap-y-6">
+              <!-- Email Field -->
+              <div>
+                <FloatLabel>
+                  <InputText
+                    id="email"
+                    v-model="email"
+                    type="email"
+                    class="w-full"
+                    :class="{
+                      '!border-red-300 focus:!border-red-500 focus:!ring-red-500': false,
+                    }"
+                    required
+                  />
+                  <label for="email" class="!text-slate-600 !font-medium"
+                    >Email Address</label
+                  >
+                </FloatLabel>
+              </div>
 
-            <!-- Password Field -->
-            <div class="space-y-2">
-              <FloatLabel>
-                <InputText
-                  input-id="password"
-                  v-model="password"
-                  type="password"
-                  class="w-full !px-4 !py-4 !border-slate-200 !rounded-xl focus:!ring-2 focus:!ring-cyan-500 focus:!border-cyan-500 !bg-white/70 !backdrop-blur-sm !transition-all !duration-300"
-                  required
-                />
-                <label for="password" class="!text-slate-600 !font-medium"
-                  >Password</label
-                >
-              </FloatLabel>
+              <!-- Password Field -->
+              <div>
+                <FloatLabel>
+                  <InputText
+                    input-id="password"
+                    v-model="password"
+                    type="password"
+                    class="w-full"
+                    required
+                  />
+                  <label for="password" class="!text-slate-600 !font-medium"
+                    >Password</label
+                  >
+                </FloatLabel>
+              </div>
             </div>
 
             <!-- Remember me and Forgot password -->
@@ -320,7 +322,7 @@ const handleSubmit = () => {
               type="submit"
               label="Sign In"
               icon="pi pi-sign-in"
-              class="w-full !bg-gradient-to-r !from-cyan-600 !to-blue-600 hover:!from-cyan-700 hover:!to-blue-700 !text-white !font-semibold !py-4 !px-6 !rounded-xl !transition-all !duration-300 !shadow-lg hover:!shadow-cyan-500/25 !border-0"
+              class="w-full"
             />
 
             <!-- Divider -->
@@ -335,7 +337,7 @@ const handleSubmit = () => {
               type="button"
               label="GitHub"
               icon="pi pi-github"
-              class="w-full !bg-slate-700 hover:bg-slate-900 hover:opacity-80 text-white font-medium !py-4 !px-6 !rounded-xl transition-all !duration-300 !shadow-lg hover:!shadow-slate-500/25 !border-0"
+              class="w-full"
             />
 
             <!-- Google Login -->
@@ -343,7 +345,7 @@ const handleSubmit = () => {
               type="button"
               label="Google"
               icon="pi pi-google"
-              class="w-full !bg-white !border-2 !border-slate-200 hover:!border-slate-300 !text-slate-700 hover:!text-slate-800 !font-medium !py-4 !px-6 !rounded-xl !transition-all !duration-300 !shadow-sm hover:!shadow-md hover:opacity-80"
+              class="w-full"
             />
 
             <!-- Sign up link -->
@@ -402,50 +404,5 @@ const handleSubmit = () => {
 /* Button hover effects */
 .btn-hover-lift:hover {
   transform: translateY(-2px);
-}
-
-/* PrimeVue component overrides */
-:deep(.p-inputtext) {
-  transition: all 0.3s ease;
-}
-
-:deep(.p-inputtext:focus) {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 25px rgba(6, 182, 212, 0.15);
-}
-
-:deep(.p-button) {
-  transition: all 0.3s ease;
-}
-
-:deep(.p-button:hover) {
-  transform: translateY(-1px);
-}
-
-:deep(.p-card) {
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* Checkbox styling */
-:deep(.p-checkbox .p-checkbox-box) {
-  border-radius: 6px;
-  transition: all 0.3s ease;
-}
-
-:deep(.p-checkbox .p-checkbox-box.p-highlight) {
-  background: linear-gradient(45deg, #06b6d4, #3b82f6);
-  border-color: #06b6d4;
-}
-
-/* Floating label enhancements */
-:deep(.p-float-label label) {
-  transition: all 0.3s ease;
-}
-
-:deep(.p-float-label .p-inputtext:focus ~ label),
-:deep(.p-float-label .p-inputtext.p-filled ~ label) {
-  color: #06b6d4;
-  font-weight: 500;
 }
 </style>

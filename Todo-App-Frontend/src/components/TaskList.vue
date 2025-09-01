@@ -7,6 +7,18 @@ import Tag from "primevue/tag";
 import { useToast } from "primevue/usetoast";
 import { Card, Select } from "primevue";
 import Toast from "primevue/toast";
+
+interface Task {
+  id: number;
+  title: string;
+  description: string;
+  priority: string;
+  project: string;
+  deadline: string;
+  status: string;
+  notes: string;
+}
+
 const toast = useToast();
 
 // Filter options
@@ -15,12 +27,12 @@ const projects = ["Website Redesign", "Mobile App", "Marketing Campaign"];
 const deadlines = ["This Week", "This Month", "Next Month"];
 
 // Selected filter values
-const selectedPriority = ref();
-const selectedProject = ref();
-const selectedDeadline = ref();
-const selectedTasks = ref([]);
+const selectedPriority = ref<string | null>(null);
+const selectedProject = ref<string | null>(null);
+const selectedDeadline = ref<string | null>(null);
+const selectedTasks = ref<Task[]>([]);
 // Sample tasks data
-const tasks = ref([
+const tasks = ref<Task[]>([
   {
     id: 1,
     title: "Design homepage mockup",
@@ -54,22 +66,22 @@ const tasks = ref([
 ]);
 
 // Utility functions
-const getPrioritySeverity = (priority) => {
+const getPrioritySeverity = (priority: string) => {
   const severityMap = {
     High: "danger",
     Medium: "warning",
     Low: "info",
   };
-  return severityMap[priority] || "info";
+  return severityMap[priority as keyof typeof severityMap] || "info";
 };
 
-const getStatusSeverity = (status) => {
+const getStatusSeverity = (status: string) => {
   const severityMap = {
     Completed: "success",
     "In Progress": "info",
     "Not Started": "warning",
   };
-  return severityMap[status] || "info";
+  return severityMap[status as keyof typeof severityMap] || "info";
 };
 
 // Action handlers
@@ -86,11 +98,11 @@ const openAddTaskDialog = () => {
   // Implement add task dialog logic here
 };
 
-const editTask = (task) => {
+const editTask = (task: Task | Task[]) => {
   // Implement edit task logic here
 };
 
-const confirmDeleteTask = (task) => {
+const confirmDeleteTask = (task: Task) => {
   // Implement delete confirmation logic here
 };
 watch([selectedPriority, selectedProject, selectedDeadline], () => {
@@ -100,7 +112,7 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
 <template>
   <Toast />
   <div
-    class="task-list-container w-full h-full flex flex-col p-0 gap-y-2 bg-gray-200"
+    class="task-list-container w-full h-full flex flex-col p-0 gap-y-2 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900"
   >
     <!-- Filters Section -->
     <div

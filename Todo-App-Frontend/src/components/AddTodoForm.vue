@@ -54,9 +54,7 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <Card
-    class="!bg-gradient-to-br !from-slate-700 !to-slate-800 !text-white !backdrop-blur-sm !border !border-gray-200/50 !shadow-lg"
-  >
+  <Card>
     <template #content>
       <div class="p-6 flex flex-col gap-y-8">
         <!-- Header -->
@@ -80,7 +78,7 @@ const handleSubmit = () => {
               id="title"
               v-model="title"
               placeholder="Task title..."
-              class="w-full !px-4 !py-3 !rounded-lg focus:!ring-2 focus:!ring-cyan-500 focus:!border-cyan-500 !transition-all !duration-300"
+              class="w-full"
               required
             />
           </div>
@@ -92,7 +90,7 @@ const handleSubmit = () => {
               v-model="description"
               rows="3"
               placeholder="Description (optional)"
-              class="w-full !px-4 !py-3 !rounded-lg focus:!ring-2 focus:!ring-cyan-500 focus:!border-cyan-500 !transition-all !duration-300 !resize-none"
+              class="w-full"
             />
           </div>
 
@@ -107,12 +105,12 @@ const handleSubmit = () => {
                   :options="priorityOptions"
                   optionLabel="label"
                   optionValue="value"
-                  class="w-full hover:!opacity-95 focus:!opacity-95 !transition-opacity !duration-300 focus:!ring-cyan-500 focus:!border-cyan-500"
+                  class="w-full"
                 >
                   <template #value="slotProps">
                     <div
                       v-if="slotProps.value"
-                      class="flex items-center !text-black !gap-x-2"
+                      class="flex items-center gap-x-2"
                     >
                       <span
                         class="w-2 h-2 rounded-full mr-2"
@@ -130,9 +128,7 @@ const handleSubmit = () => {
                     </div>
                   </template>
                   <template #option="slotProps">
-                    <div
-                      class="flex items-center !text-black !gap-x-2 hover:opacity-90"
-                    >
+                    <div class="flex items-center gap-x-2">
                       <span
                         class="w-2 h-2 rounded-full !mr-2"
                         :class="{
@@ -156,7 +152,7 @@ const handleSubmit = () => {
                   id="dueDate"
                   v-model="dueDate"
                   dateFormat="yy-mm-dd"
-                  class="w-full focus:!ring-cyan-500 focus:!border-cyan-500"
+                  class="w-full"
                   :showIcon="false"
                 />
                 <label for="dueDate" class="text-black">Due date</label>
@@ -168,11 +164,7 @@ const handleSubmit = () => {
           </div>
 
           <!-- Submit Button -->
-          <Button
-            type="submit"
-            :disabled="!title.trim()"
-            class="w-full !bg-gradient-to-r !from-cyan-600 !to-blue-600 hover:!from-cyan-700 hover:!to-blue-700 !text-white !font-semibold !py-3 !px-6 !rounded-lg !transition-all !duration-300 !shadow-lg hover:!shadow-cyan-500/25 !border-0 disabled:!opacity-50 disabled:!cursor-not-allowed"
-          >
+          <Button type="submit" :disabled="!title.trim()" class="w-full">
             <i class="pi pi-plus mr-2"></i>
             Add Task
           </Button>

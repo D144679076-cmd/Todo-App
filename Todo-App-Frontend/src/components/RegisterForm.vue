@@ -92,7 +92,7 @@ const handleSubmit = () => {
         <p class="text-gray-600">Join LYNXLAB to transform your productivity</p>
       </div>
       <form @submit.prevent="handleSubmit" class="space-y-6">
-        <div class="space-y-6 flex flex-col">
+        <div class="gap-y-6 flex flex-col">
           <!-- Full Name Field -->
           <div>
             <FloatLabel>
@@ -273,59 +273,5 @@ const handleSubmit = () => {
 /* Button hover effects */
 .btn-hover-lift:hover {
   transform: translateY(-2px);
-}
-
-/* PrimeVue component overrides */
-:deep(.p-inputtext) {
-  transition: all 0.3s ease;
-}
-
-:deep(.p-inputtext:focus) {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 25px rgba(6, 182, 212, 0.15);
-}
-
-:deep(.p-button) {
-  transition: all 0.3s ease;
-}
-
-:deep(.p-button:hover:not(:disabled)) {
-  transform: translateY(-1px);
-}
-
-:deep(.p-card) {
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* Floating label enhancements */
-:deep(.p-float-label label) {
-  transition: all 0.3s ease;
-}
-
-:deep(.p-float-label .p-inputtext:focus ~ label),
-:deep(.p-float-label .p-inputtext.p-filled ~ label) {
-  color: #06b6d4;
-  font-weight: 500;
-}
-
-/* Disabled button styling */
-:deep(.p-button:disabled) {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none !important;
-}
-
-/* Form field spacing */
-.space-y-4 > * + * {
-  margin-top: 1rem;
-}
-
-.space-y-6 > * + * {
-  margin-top: 1.5rem;
-}
-
-.space-y-3 > * + * {
-  margin-top: 0.75rem;
 }
 </style>

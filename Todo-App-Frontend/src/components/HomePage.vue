@@ -239,9 +239,7 @@ const handleToggleTodo = (id: string) => {
 
         <!-- Stats Cards -->
         <div class="grid grid-cols-3 gap-4">
-          <Card
-            class="!bg-gradient-to-br !from-slate-800 !to-slate-800 !text-white backdrop-blur-sm border-border/50 shadow-card"
-          >
+          <Card>
             <template #content>
               <div class="p-4 text-center">
                 <div class="text-2xl font-bold text-primary mb-1">
@@ -251,9 +249,7 @@ const handleToggleTodo = (id: string) => {
               </div>
             </template>
           </Card>
-          <Card
-            class="!bg-gradient-to-br !from-slate-800 !to-slate-800 !text-whitebackdrop-blur-sm border-border/50 shadow-card"
-          >
+          <Card>
             <template #content>
               <div class="p-4 text-center">
                 <div class="text-2xl font-bold text-green-400 mb-1">
@@ -265,9 +261,7 @@ const handleToggleTodo = (id: string) => {
               </div>
             </template>
           </Card>
-          <Card
-            class="!bg-gradient-to-br !from-slate-800 !to-slate-800 !text-white backdrop-blur-sm border-border/50 shadow-card"
-          >
+          <Card>
             <template #content>
               <div class="p-4 text-center">
                 <div class="text-2xl font-bold text-yellow-400 mb-1">
@@ -281,11 +275,7 @@ const handleToggleTodo = (id: string) => {
 
         <!-- Filter Menubar -->
         <div class="flex items-center justify-between">
-          <Menubar
-            :model="menuItems"
-            class="!bg-gradient-to-br !from-cyan-500 !to-cyan-700 !border-cyan-500 !rounded-lg"
-          >
-          </Menubar>
+          <Menubar :model="menuItems"></Menubar>
 
           <!-- <div class="flex items-center gap-x-2">
             <Button variant="outlined" size="small">
@@ -302,9 +292,7 @@ const handleToggleTodo = (id: string) => {
         <!-- Todo List -->
         <div class="gap-y-3 flex flex-col">
           <template v-if="filteredTodos.length === 0">
-            <Card
-              class="!bg-gradient-to-br !from-slate-800 !to-slate-800 backdrop-blur-sm border-border/50 shadow-card !text-white"
-            >
+            <Card class="text-white">
               <template #content>
                 <div class="p-8 text-center">
                   <i
@@ -341,68 +329,3 @@ const handleToggleTodo = (id: string) => {
     </div>
   </div>
 </template>
-
-<style scoped>
-.fixed {
-  position: fixed;
-}
-
-/* Menubar custom styles */
-:deep(.p-menubar) {
-  border: none;
-  background: transparent;
-  color: white;
-}
-
-:deep(.p-menubar-root-list) {
-  border: none;
-  background: transparent;
-  gap: 0.5rem;
-  margin: 0;
-  list-style: none;
-}
-
-:deep(.p-menubar-item) {
-  margin: 0;
-}
-
-:deep(.p-menubar-item.p-focus .p-menubar-item-link) {
-  padding: 0.625rem 1.5rem;
-  border: none;
-  border-radius: 0.75rem;
-  background: transparent;
-  color: rgb(30, 41, 59);
-  font-weight: 600;
-  font-size: 0.875rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-}
-
-:deep(.p-menubar-item-link) {
-  padding: 0.625rem 1.5rem;
-  border: none;
-  border-radius: 0.75rem;
-  background: transparent;
-  color: white;
-  font-weight: 600;
-  font-size: 0.875rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-}
-
-:deep(.p-menubar-item-link:hover) {
-  background: rgba(255, 255, 255, 0.8);
-  color: rgb(30, 41, 59);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  transform: scale(1.02);
-}
-
-:deep(.p-menubar-item-icon) {
-  margin-right: 0.5rem;
-  color: white;
-}
-</style>
