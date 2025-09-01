@@ -210,7 +210,7 @@ function eventsForDayHour(date: Date, hour: string) {
 </script>
 <template>
   <div
-    class="bg-gray-50 min-h-screen p-8 max-w-screen"
+    class="h-full p-6 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 min-h-screen p-8 max-w-screen"
     style="margin-top: 21px"
   >
     <div class="mx-auto">
@@ -219,13 +219,13 @@ function eventsForDayHour(date: Date, hour: string) {
         class="flex items-center justify-between mb-6"
         style="margin-bottom: 12px"
       >
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center gap-x-4">
           <Button
             icon="pi pi-angle-left"
             class="p-button-text"
             @click="prevMonth"
           />
-          <h2 class="text-2xl font-semibold text-black">{{ monthYear }}</h2>
+          <h2 class="text-2xl font-semibold text-white">{{ monthYear }}</h2>
           <Button
             icon="pi pi-angle-right"
             class="p-button-text"
