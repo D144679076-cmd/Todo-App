@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import { Button, SelectButton } from "primevue";
+import { Button, Menubar } from "primevue";
 
 interface Event {
   id: number;
@@ -169,11 +169,6 @@ function goToday() {
   currentMonth.value = today.getMonth();
   currentYear.value = today.getFullYear();
 }
-const selectButtonSelect = ref([
-  { label: "Month", value: "month" },
-  { label: "Week", value: "week" },
-  { label: "Day", value: "day" },
-]);
 const selectedDate = ref(
   new Date(currentYear.value, currentMonth.value, today.getDate())
 );
@@ -207,6 +202,53 @@ function eventsForDayHour(date: Date, hour: string) {
     (e) => e.date === dStr && (!e.time || e.time.startsWith(hour.split(":")[0]))
   );
 }
+const customMenuBar = ref({
+  light: {
+    root: {
+      background: "{cyan.500}", // Gradient background
+      item: {
+        color: "#ffffff",
+        icon: {
+          color: "#ffffff",
+        },
+      },
+      border: {
+        color: "{cyan.500}",
+      },
+    },
+  },
+  dark: {
+    root: {
+      background: "{cyan.500}", // Gradient background
+      item: {
+        color: "#ffffff",
+        icon: {
+          color: "#ffffff",
+        },
+      },
+      border: {
+        color: "{cyan.500}",
+      },
+    },
+  },
+});
+const menuItems = ref([
+  {
+    label: "Month",
+    value: "month",
+    command: () => (view.value = "month"),
+  },
+  {
+    label: "Week",
+    value: "week",
+    command: () => (view.value = "week"),
+  },
+  {
+    label: "Day",
+    value: "day",
+    command: () => (view.value = "day"),
+  },
+]);
 </script>
 <template>
   <div
@@ -233,12 +275,12 @@ function eventsForDayHour(date: Date, hour: string) {
           />
         </div>
         <div class="flex gap-2">
-          <Button label="Today" class="p-button-outlined" @click="goToday" />
-          <SelectButton
-            v-model="view"
-            :options="selectButtonSelect"
+          <Button label="Today" @click="goToday" />
+          <Menubar
+            :model="menuItems"
             option-label="label"
             option-value="value"
+            :dt="customMenuBar"
           />
         </div>
       </div>

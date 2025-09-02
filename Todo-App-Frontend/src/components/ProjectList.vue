@@ -127,6 +127,14 @@ function prioritySeverity(priority: string): "danger" | "info" | "secondary" {
   if (priority === "Medium Priority") return "info";
   return "secondary";
 }
+const customCard = ref({
+  background: "{slate.800}",
+  color: "#ffffff",
+});
+const customPaginator = ref({
+  background: "{slate.800}",
+  color: "#ffffff",
+});
 </script>
 <template>
   <div
@@ -218,58 +226,65 @@ function prioritySeverity(priority: string): "danger" | "info" | "secondary" {
       </div>
       <!-- Project Cards -->
       <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-black"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-white"
         style="margin-top: 16px"
       >
-        <div v-for="project in paginatedProjects" :key="project.id">
-          <div class="bg-white rounded-lg shadow p-6 flex flex-col h-full">
-            <div class="flex items-center justify-between mb-2">
-              <h2 class="text-lg font-semibold">{{ project.name }}</h2>
-              <Tag
-                :value="project.status"
-                :severity="statusSeverity(project.status)"
-                class="ml-2"
-              />
-            </div>
-            <div class="text-sm text-gray-500 mb-4">
-              Started: {{ project.startDate }}
-            </div>
-            <div class="mb-4">
-              <div class="font-medium mb-1">Progress</div>
-              <ProgressBar :value="project.progress" class="h-3 rounded" />
-            </div>
-            <div class="mb-4">
-              <div class="font-medium mb-1">Next Upcoming Task</div>
-              <div class="bg-gray-50 rounded p-3">
-                <div class="font-semibold">{{ project.nextTask.title }}</div>
-                <div class="text-xs text-gray-500">
-                  {{ project.nextTask.description }}
-                </div>
-                <div class="flex items-center justify-between mt-2">
-                  <span class="text-xs text-black"
-                    >Due: {{ project.nextTask.due }}</span
-                  >
-                  <Tag
-                    :value="project.nextTask.priority"
-                    :severity="prioritySeverity(project.nextTask.priority)"
-                  />
+        <Card
+          v-for="project in paginatedProjects"
+          :key="project.id"
+          class="h-full"
+          :dt="customCard"
+        >
+          <template #content>
+            <div class="p-6 flex flex-col h-full">
+              <div class="flex items-center justify-between mb-2">
+                <h2 class="text-lg font-semibold">{{ project.name }}</h2>
+                <Tag
+                  :value="project.status"
+                  :severity="statusSeverity(project.status)"
+                  class="ml-2"
+                />
+              </div>
+              <div class="text-sm text-gray-400 mb-4">
+                Started: {{ project.startDate }}
+              </div>
+              <div class="mb-4">
+                <div class="font-medium mb-1">Progress</div>
+                <ProgressBar :value="project.progress" class="h-3 rounded" />
+              </div>
+              <div class="mb-4">
+                <div class="font-medium mb-1">Next Upcoming Task</div>
+                <div class="rounded p-3 bg-slate-700">
+                  <div class="font-semibold">{{ project.nextTask.title }}</div>
+                  <div class="text-xs text-gray-400">
+                    {{ project.nextTask.description }}
+                  </div>
+                  <div class="flex items-center justify-between mt-2">
+                    <span class="text-xs text-white">
+                      Due: {{ project.nextTask.due }}
+                    </span>
+                    <Tag
+                      :value="project.nextTask.priority"
+                      :severity="prioritySeverity(project.nextTask.priority)"
+                    />
+                  </div>
                 </div>
               </div>
+              <Divider />
+              <div class="flex items-center space-x-2 mt-2 justify-between">
+                <AvatarGroup>
+                  <Avatar
+                    v-for="user in project.members"
+                    :key="user"
+                    :label="user[0]"
+                    shape="circle"
+                  />
+                </AvatarGroup>
+                <Button icon="pi pi-ellipsis-v" outlined text @click="" />
+              </div>
             </div>
-            <Divider />
-            <div class="flex items-center space-x-2 mt-2 justify-between">
-              <AvatarGroup>
-                <Avatar
-                  v-for="user in project.members"
-                  :key="user"
-                  :label="user[0]"
-                  shape="circle"
-                />
-              </AvatarGroup>
-              <Button icon="pi pi-ellipsis-v" outlined text @click="" />
-            </div>
-          </div>
-        </div>
+          </template>
+        </Card>
       </div>
 
       <!-- Pagination -->
@@ -283,6 +298,7 @@ function prioritySeverity(priority: string): "danger" | "info" | "secondary" {
           :rows="4"
           :totalRecords="filteredProjects.length"
           v-model:first="page"
+          :dt="customPaginator"
         />
       </div>
     </div>
