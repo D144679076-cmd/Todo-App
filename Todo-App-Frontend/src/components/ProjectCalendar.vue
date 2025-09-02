@@ -400,6 +400,3 @@ function eventsForDayHour(date: Date, hour: string) {
     </div>
   </div>
 </template>
-
-<style scoped></style>
-<style scoped></style>

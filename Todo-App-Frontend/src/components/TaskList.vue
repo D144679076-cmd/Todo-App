@@ -108,6 +108,89 @@ const confirmDeleteTask = (task: Task) => {
 watch([selectedPriority, selectedProject, selectedDeadline], () => {
   applyFilters();
 });
+const customTable = ref({
+  light: {
+    header: {
+      background: "{slate.800}",
+      color: "#ffffff",
+      cell: {
+        border: {
+          color: "{slate.800}",
+        },
+        background: "{slate.800}",
+        color: "#ffffff",
+      },
+    },
+    row: {
+      background: "{slate.800}",
+      color: "#ffffff",
+    },
+    body: {
+      cell: {
+        border: {
+          color: "{slate.800}",
+        },
+        background: "{slate.800}",
+      },
+    },
+    paginator: {
+      background: "{slate.800}",
+      color: "#ffffff",
+      bottom: {
+        border: {
+          color: "{slate.800}",
+        },
+      },
+    },
+    footer: {
+      border: {
+        color: "{slate.800}",
+      },
+      color: "{slate.800}",
+      background: "{slate.800}",
+    },
+  },
+  dark: {
+    header: {
+      background: "{slate.800}",
+      color: "#ffffff",
+      cell: {
+        border: {
+          color: "{slate.800}",
+        },
+        background: "{slate.800}",
+        color: "#ffffff",
+      },
+    },
+    row: {
+      background: "{slate.800}",
+      color: "#ffffff",
+    },
+    body: {
+      cell: {
+        border: {
+          color: "{slate.800}",
+        },
+      },
+    },
+    paginator: {
+      background: "{slate.800}",
+      color: "#ffffff",
+      bottom: {
+        border: {
+          color: "{slate.800}",
+        },
+      },
+    },
+    footer: {
+      border: {
+        color: "{slate.800}",
+      },
+      color: "{slate.800}",
+      background: "{slate.800}",
+    },
+  },
+});
 </script>
 <template>
   <Toast />
@@ -116,7 +199,7 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
   >
     <!-- Filters Section -->
     <div
-      class="filters mb-4 px-8 py-8 bg-gradient-to-br from-slate-700 via-blue-700 to-slate-700"
+      class="filters mb-4 px-8 py-8 bg-slate-800"
       style="margin: 16px; border-radius: 8px"
     >
       <div class="flex flex-col gap-y-4 w-full">
@@ -168,10 +251,7 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
     </div>
 
     <!-- Tasks Section -->
-    <div
-      style="margin: 16px; border-radius: 8px"
-      class="bg-gradient-to-br from-slate-700 via-blue-700 to-slate-700"
-    >
+    <div style="margin: 16px; border-radius: 8px" class="bg-slate-800">
       <div class="tasks flex-1 flex flex-col px-8 gap-y-3 py-8">
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-xl font-bold text-white">Tasks</h2>
@@ -179,7 +259,6 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
             <Button
               label="Edit"
               icon="pi pi-pencil"
-              outlined
               @click="editTask(selectedTasks)"
               v-bind:disabled="selectedTasks.length <= 0"
             />
@@ -201,13 +280,14 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
             class="h-full w-full"
             style="min-height: 400px; height: 100%"
             v-model:selection="selectedTasks"
+            :dt="customTable"
           >
             <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
             <Column field="title" header="TASK">
               <template #body="slotProps">
                 <div>
                   <div class="font-bold">{{ slotProps.data.title }}</div>
-                  <div class="text-sm text-gray-500">
+                  <div class="text-sm text-gray-400">
                     {{ slotProps.data.description }}
                   </div>
                 </div>
@@ -286,5 +366,7 @@ watch([selectedPriority, selectedProject, selectedDeadline], () => {
 }
 :deep(.p-paginator) {
   border-radius: 0px 0px 8px 8px;
+  background-color: var(--color-slate-800);
+  color: white;
 }
 </style>

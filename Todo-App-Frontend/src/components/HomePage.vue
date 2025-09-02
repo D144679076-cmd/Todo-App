@@ -208,6 +208,36 @@ const handleToggleTodo = (id: string) => {
     todo.completed = !todo.completed;
   }
 };
+const menuCustomsBar = ref({
+  light: {
+    root: {
+      background: "{cyan.600}", // Gradient background
+      item: {
+        color: "#ffffff",
+        icon: {
+          color: "#ffffff",
+        },
+      },
+      border: {
+        color: "{cyan.600}",
+      },
+    },
+  },
+  dark: {
+    root: {
+      background: "{cyan.600}", // Gradient background
+      item: {
+        color: "#ffffff",
+        icon: {
+          color: "#ffffff",
+        },
+      },
+      border: {
+        color: "{cyan.600}",
+      },
+    },
+  },
+});
 </script>
 <template>
   <div
@@ -275,7 +305,7 @@ const handleToggleTodo = (id: string) => {
 
         <!-- Filter Menubar -->
         <div class="flex items-center justify-between">
-          <Menubar :model="menuItems"></Menubar>
+          <Menubar :model="menuItems" :dt="menuCustomsBar"></Menubar>
 
           <!-- <div class="flex items-center gap-x-2">
             <Button variant="outlined" size="small">

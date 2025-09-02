@@ -172,9 +172,7 @@ function prioritySeverity(priority: string): "danger" | "info" | "secondary" {
       v-else
     >
       <!-- Filters -->
-      <div
-        class="filters bg-gradient-to-br from-slate-700 via-blue-700 to-slate-800 rounded-lg shadow p-6 mb-8"
-      >
+      <div class="filters bg-slate-800 rounded-lg shadow p-6 mb-8">
         <div class="grid grid-cols-3 gap-4">
           <div class="flex flex-col gap-y-2">
             <span class="text-sm font-bold mb-4 text-white">
