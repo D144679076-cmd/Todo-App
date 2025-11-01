@@ -51,14 +51,13 @@ const handleSubmit = () => {
       window.location.href = "/";
     })
     .catch((error) => {
-      console.error("Login failed:", error);
+      console.error("Login failed:", error.response);
       toast.add({
         severity: "error",
         summary: "Invalid email or password",
-        detail: error,
+        detail: error.response?.data?.message || "Đăng nhập thất bại",
         life: 3000,
       });
-      // Handle login failure (e.g., show error message)
     });
 };
 </script>

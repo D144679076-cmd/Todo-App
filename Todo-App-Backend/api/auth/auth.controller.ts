@@ -27,10 +27,10 @@ export const loginByEmail = async (req: Request, res: Response) => {
   }
   const userInDb = await getUser(authRequest.email);
   if (!userInDb || userInDb.length === 0) {
-    return res.status(401).json({
+    return res.status(404).json({
       error: "User not found",
       message: "Tài khoản không tồn tại, vui lòng đăng ký tài khoảng",
-      code: 401,
+      code: 404,
     });
   }
   if (passwordDecrypt(userInDb[0].password) === authRequest.password) {
