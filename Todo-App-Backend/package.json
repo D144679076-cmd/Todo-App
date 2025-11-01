@@ -23,7 +23,7 @@
     "express": "^4.21.2",
     "fast-jwt": "^4.0.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.2"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
