@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { queryObject } from "../libs/reqBody.type";
+import type { queryObject } from "../libs/reqBody.type.d.ts";
 import {
   getTasksbyID,
   getTasks,
@@ -8,8 +8,8 @@ import {
   deleteTaskByID,
   updateTasks,
   deleteTasks,
-} from "./tasks.service";
-export const useGetTasksByID = (req, res) => {
+} from "./tasks.service.ts";
+export const useGetTasksByID = (req: Request, res: Response) => {
   const { id } = req.params;
   const tasks = getTasksbyID(id);
   res.status(200).json({ tasks });

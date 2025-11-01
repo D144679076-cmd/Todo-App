@@ -1,4 +1,4 @@
-import type { QueryOptions } from "@prisma/client/runtime/library";
+import { query } from "express";
 import $prisma from "../../database/init.js";
 import type { Prisma } from "@prisma/client";
 export const getRoles = async (queryObject: Prisma.rolesSelect) => {
@@ -63,6 +63,34 @@ export const deleteRole = async (id: string) => {
       },
     });
     return role;
+  } catch (err: any) {
+    console.log("node: auth.service.ts:line 34 : error: ", err);
+    return null;
+  }
+};
+
+export const deleteRoles = async (query: Prisma.rolesWhereInput) => {
+  try {
+    const roles = await $prisma.roles.deleteMany({
+      where: query,
+    });
+    return roles;
+  } catch (err: any) {
+    console.log("node: auth.service.ts:line 34 : error: ", err);
+    return null;
+  }
+};
+
+export const updateRoles = async (
+  query: Prisma.rolesWhereInput,
+  data: Prisma.rolesUpdateInput
+) => {
+  try {
+    const roles = await $prisma.roles.updateMany({
+      where: query,
+      data: data,
+    });
+    return roles;
   } catch (err: any) {
     console.log("node: auth.service.ts:line 34 : error: ", err);
     return null;

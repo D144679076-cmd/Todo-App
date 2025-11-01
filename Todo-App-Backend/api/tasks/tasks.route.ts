@@ -7,7 +7,7 @@ import {
   useGetTasksByID,
   useUpdateTaskByID,
   useUpdateTasks,
-} from "./tasks.controller";
+} from "./tasks.controller.ts";
 const tasksRouter = express.Router();
 
 tasksRouter

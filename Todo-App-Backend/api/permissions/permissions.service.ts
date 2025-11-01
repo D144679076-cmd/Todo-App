@@ -13,7 +13,7 @@ export const getPermission = async (id: string) => {
   try {
     const permission = await $prisma.permissions.findMany({
       where: {
-        id: id,
+        id: parseInt(id),
       },
     });
     return permission;
@@ -40,7 +40,7 @@ export const updatePermission = async (
   try {
     const permission = await $prisma.permissions.update({
       where: {
-        id: id,
+        id: parseInt(id),
       },
       data: data,
     });
@@ -54,7 +54,7 @@ export const deletePermission = async (id: string) => {
   try {
     const permission = await $prisma.permissions.delete({
       where: {
-        id: id,
+        id: parseInt(id),
       },
     });
     return permission;
@@ -68,7 +68,7 @@ export const deletePermissions = async (id: string[]) => {
     const permissions = await $prisma.permissions.deleteMany({
       where: {
         id: {
-          in: id,
+          in: id.map((i) => parseInt(i)),
         },
       },
     });

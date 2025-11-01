@@ -1,6 +1,6 @@
 import { query } from "express";
-import $prisma from "../../database/init";
-import { queryObject } from "../libs/reqBody.type";
+import $prisma from "../../database/init.ts";
+import type { queryObject } from "../libs/reqBody.type.d.ts";
 export const getTasksbyID = async (id: string) => {
   try {
     const tasks = await $prisma.tasks.findFirst({
