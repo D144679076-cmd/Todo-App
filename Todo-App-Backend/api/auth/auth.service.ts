@@ -1,6 +1,6 @@
 import CryptoJS from "crypto-js";
 import { createDecoder, createSigner } from "fast-jwt";
-import $prisma from "../../database/init.js";
+import $prisma from "../../database/init.ts";
 
 // Type definition for permissions
 type PermissionObjects = {

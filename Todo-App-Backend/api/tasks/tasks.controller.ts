@@ -1,51 +1,52 @@
 import { Request, Response } from "express";
 import type { queryObject } from "../libs/reqBody.type.d.ts";
 import {
-  getTasksbyID,
-  getTasks,
   createTask,
-  updateTaskByID,
   deleteTaskByID,
-  updateTasks,
   deleteTasks,
+  getTasks,
+  getTasksbyID,
+  updateTaskByID,
+  updateTasks,
 } from "./tasks.service.ts";
-export const useGetTasksByID = (req: Request, res: Response) => {
+
+export const useGetTasksByID = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const tasks = getTasksbyID(id);
+  const tasks = await getTasksbyID(id);
   res.status(200).json({ tasks });
 };
-export const useCreateTask = (req: Request, res: Response) => {
+export const useCreateTask = async (req: Request, res: Response) => {
   const body = req.body;
   // Assuming a createTask function exists in tasks.service.ts
-  const task = createTask(body);
+  const task = await createTask(body);
   res.status(201).json({ task });
 };
-export const useUpdateTaskByID = (req: Request, res: Response) => {
+export const useUpdateTaskByID = async (req: Request, res: Response) => {
   const { id } = req.params;
   const body = req.body;
   // Assuming an updateTask function exists in tasks.service.ts
-  const updatedTask = updateTaskByID(id, body);
+  const updatedTask = await updateTaskByID(id, body);
   res.status(200).json({ updatedTask });
 };
-export const useDeleteTaskByID = (req: Request, res: Response) => {
+export const useDeleteTaskByID = async (req: Request, res: Response) => {
   const { id } = req.params;
   // Assuming a deleteTask function exists in tasks.service.ts
-  const deletedTask = deleteTaskByID(id);
+  const deletedTask = await deleteTaskByID(id);
   res.status(200).json({ deletedTask });
 };
-export const useGetTasks = (req: Request, res: Response) => {
+export const useGetTasks = async (req: Request, res: Response) => {
   const query: queryObject = req.query as queryObject;
-  const tasks = getTasks(query);
+  const tasks = await getTasks(query);
   res.status(200).json({ tasks });
 };
-export const useUpdateTasks = (req: Request, res: Response) => {
+export const useUpdateTasks = async (req: Request, res: Response) => {
   const queryObject = req.query as queryObject;
   const body = req.body;
-  const updatedTasks = updateTasks(queryObject, body);
+  const updatedTasks = await updateTasks(queryObject, body);
   res.status(200).json({ updatedTasks });
 };
-export const useDeleteTasks = (req: Request, res: Response) => {
+export const useDeleteTasks = async (req: Request, res: Response) => {
   const queryObject = req.query as queryObject;
-  const deletedTasks = deleteTasks(queryObject);
+  const deletedTasks = await deleteTasks(queryObject);
   res.status(200).json({ deletedTasks });
 };

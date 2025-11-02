@@ -8,15 +8,13 @@ import {
   useUpdateTaskByID,
   useUpdateTasks,
 } from "./tasks.controller.ts";
+
 const tasksRouter = express.Router();
 
 tasksRouter
   .route("/:id")
   .get((req, res) => {
     useGetTasksByID(req, res);
-  })
-  .put((req, res) => {
-    useUpdateTaskByID(req, res);
   })
   .delete((req, res) => {
     useDeleteTaskByID(req, res);
@@ -31,9 +29,6 @@ tasksRouter
   })
   .post((req, res) => {
     useCreateTask(req, res);
-  })
-  .put((req, res) => {
-    useUpdateTasks(req, res);
   })
   .delete((req, res) => {
     useDeleteTasks(req, res);

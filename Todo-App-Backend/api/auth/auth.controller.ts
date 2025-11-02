@@ -6,12 +6,12 @@ import {
   tokenGenerator,
   refreshTokenGenerator,
   sessionCreate,
-} from "./auth.service.js";
+} from "./auth.service.ts";
 import type {
   AuthBody,
   registeBody,
   logoutBody,
-} from "../libs/reqBody.type.js";
+} from "../libs/reqBody.type.ts";
 import { getUser } from "../user/user.service.ts";
 import { env } from "node:process";
 export const loginByEmail = async (req: Request, res: Response) => {

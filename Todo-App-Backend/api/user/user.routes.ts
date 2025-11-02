@@ -1,5 +1,4 @@
 import express from "express";
-import type { Request, Response } from "express";
 import {
   useCreateUser,
   useDeleteUser,
@@ -7,7 +6,8 @@ import {
   useGetUsers,
   useUpdateUser,
   useUpdateUsers,
-} from "./user.controller.js";
+} from "./user.controller.ts";
+
 const userRouter = express.Router();
 
 userRouter

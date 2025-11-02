@@ -1,12 +1,13 @@
 import express from "express";
-import { configDotenv } from "dotenv";
-import { env } from "node:process";
-import userRouter from "./api/user/user.routes.js";
-import authRouter from "./api/auth/auth.routes.js";
-import $prisma from "./database/init.js";
+import {configDotenv} from "dotenv";
+import {env} from "node:process";
+import userRouter from "./api/user/user.routes.ts";
+import authRouter from "./api/auth/auth.routes.ts";
+import $prisma from "./database/init.ts";
 import bodyParser from "body-parser";
 import cors from "cors";
-import tasksRouter from "./api/tasks/tasks.route.js";
+import tasksRouter from "./api/tasks/tasks.route.ts";
+
 configDotenv({ path: "./.env" });
 
 const app = express();

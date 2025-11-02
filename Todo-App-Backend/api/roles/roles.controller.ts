@@ -1,5 +1,5 @@
 import {
-  createRole,
+  createRoles,
   deleteRole,
   deleteRoles,
   getRole,
@@ -25,15 +25,6 @@ export const useGetRoleByQuery = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "Roles not found" });
   }
   return res.json(roles);
-};
-
-export const useCreateRole = async (req: Request, res: Response) => {
-  const data = req.body;
-  const role = await createRole(data);
-  if (!role) {
-    return res.status(400).json({ message: "Error creating role" });
-  }
-  return res.status(201).json(role);
 };
 
 export const useUpdateRole = async (req: Request, res: Response) => {
@@ -72,4 +63,13 @@ export const useUpdateRoles = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "Roles not found" });
   }
   return res.json(roles);
+};
+
+export const useCreateRoles = async (req: Request, res: Response) => {
+  const data = req.body;
+  const roles = await createRoles(data);
+  if (!roles) {
+    return res.status(400).json({ message: "Error creating roles" });
+  }
+  return res.status(201).json(roles);
 };

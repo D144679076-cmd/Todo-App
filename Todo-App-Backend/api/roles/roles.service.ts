@@ -1,5 +1,5 @@
 import { query } from "express";
-import $prisma from "../../database/init.js";
+import $prisma from "../../database/init";
 import type { Prisma } from "@prisma/client";
 export const getRoles = async (queryObject: Prisma.rolesSelect) => {
   try {
@@ -23,17 +23,6 @@ export const getRole = async (id: string) => {
       where: {
         id: id,
       },
-    });
-    return role;
-  } catch (err: any) {
-    console.log("node: auth.service.ts:line 34 : error: ", err);
-    return null;
-  }
-};
-export const createRole = async (data: Prisma.rolesCreateInput) => {
-  try {
-    const role = await $prisma.roles.create({
-      data: data,
     });
     return role;
   } catch (err: any) {
@@ -88,6 +77,18 @@ export const updateRoles = async (
   try {
     const roles = await $prisma.roles.updateMany({
       where: query,
+      data: data,
+    });
+    return roles;
+  } catch (err: any) {
+    console.log("node: auth.service.ts:line 34 : error: ", err);
+    return null;
+  }
+};
+
+export const createRoles = async (data: Prisma.rolesCreateManyInput[]) => {
+  try {
+    const roles = await $prisma.roles.createMany({
       data: data,
     });
     return roles;

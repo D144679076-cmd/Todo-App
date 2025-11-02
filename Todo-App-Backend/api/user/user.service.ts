@@ -1,4 +1,4 @@
-import $prisma from "../../database/init.js";
+import $prisma from "../../database/init.ts";
 import { configDotenv } from "dotenv";
 import type { Prisma } from "@prisma/client";
 configDotenv({ path: "../../.env" });

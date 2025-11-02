@@ -1,8 +1,4 @@
-import type {
-  AuthBody,
-  logoutBody,
-  registeBody,
-} from "../libs/reqBody.type.js";
+import type { registeBody } from "../libs/reqBody.type.d.ts";
 import type { Request, Response } from "express";
 import {
   createUser,
@@ -12,9 +8,7 @@ import {
   getUsers,
   updateUser,
   updateUsers,
-} from "./user.service.js";
-import $prisma from "../../database/init.js";
-import { env } from "node:process";
+} from "./user.service.ts";
 
 export const useGetUser = async (req: Request, res: Response) => {
   const userID = req.params.id;

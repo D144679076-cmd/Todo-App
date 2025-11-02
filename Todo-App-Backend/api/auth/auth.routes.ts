@@ -3,7 +3,7 @@ import {
   loginByEmail,
   registerByEmail,
   logoutByEmail,
-} from "./auth.controller.js";
+} from "./auth.controller.ts";
 
 const authRouter = express.Router();
 

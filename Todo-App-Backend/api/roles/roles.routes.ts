@@ -4,9 +4,9 @@ import {
   useUpdateRole,
   useDeleteRole,
   useGetRoleByQuery,
-  useCreateRole,
   useUpdateRoles,
   useDeleteRoles,
+  useCreateRoles,
 } from "./roles.controller";
 const rolesRouter = express.Router();
 rolesRouter
@@ -29,7 +29,7 @@ rolesRouter
     useGetRoleByQuery(req, res);
   })
   .post((req, res) => {
-    useCreateRole(req, res);
+    useCreateRoles(req, res);
   })
   .put((req, res) => {
     useUpdateRoles(req, res);

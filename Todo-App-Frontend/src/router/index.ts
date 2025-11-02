@@ -1,4 +1,3 @@
-// filepath: /home/duy/Project/personal/Todo-App/Todo-App-Frontend/src/router/index.js
 import { createRouter, createMemoryHistory } from "vue-router";
 import Login from "../components/Login.vue";
 import { createWebHistory } from "vue-router";
