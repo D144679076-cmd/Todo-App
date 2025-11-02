@@ -12,7 +12,6 @@ authRouter.route("/login").post(async (req: Request, res: Response) => {
 });
 
 authRouter.route("/register").post(async (req: Request, res: Response) => {
-  console.log("req", req);
   await registerByEmail(req, res);
 });
 

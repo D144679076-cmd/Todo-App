@@ -79,61 +79,61 @@ export const loginByEmail = async (req: Request, res: Response) => {
   });
 };
 export const registerByEmail = async (req: Request, res: Response) => {
-  await $prisma.$connect();
-  try {
-    const registeBody: registeBody = req.body as registeBody;
-    console.log("registeBody:", registeBody);
-    if (!registeBody || !registeBody.email || !registeBody.password) {
-      return res.status(400).json({
-        error: "Invalid request",
-        message: "Vui lòng  đăng điền email và mật khẩu",
-        code: 400,
-      });
+    try {
+        await $prisma.$connect();
+        const registeBody: registeBody = req.body as registeBody;
+        console.log("registeBody:", registeBody);
+        if (!registeBody || !registeBody.email || !registeBody.password) {
+            return res.status(400).json({
+                error: "Invalid request",
+                message: "Vui lòng  đăng điền email và mật khẩu",
+                code: 400,
+            });
+        }
+        if (!registeBody.email.includes("@")) {
+            return res.status(400).json({
+                error: "Invalid request",
+                message: "Vui lòng điền email",
+                code: 400,
+            });
+        }
+        if (registeBody.password.length < 6) {
+            return res.status(400).json({
+                error: "Invalid request",
+                message: "Mật không đủ 6 kí tự",
+                code: 400,
+            });
+        }
+        const passwordInDB = passwordEncrypt(registeBody.password);
+        const role = await $prisma.roles.findMany({
+            where: {
+                name: "NORMAL_USER",
+            },
+            select: {
+                name: true,
+                id: true,
+            },
+        });
+        const userID = await $prisma.users.create({
+            data: {
+                email: registeBody.email,
+                password: passwordInDB,
+                name: registeBody.fullName,
+                role: role[0]?.id ?? "",
+            },
+        });
+        return res.status(200).json({
+            user_id: userID.id,
+            message: "Success",
+        });
+    } catch (err) {
+        console.log("node: auth.service.ts:line 131 : error: ", err);
+        return res.status(500).json({
+            error: "Internal server error",
+            message: "Lỗi khi tạo tài khoản",
+            code: 500,
+        });
     }
-    if (!registeBody.email.includes("@")) {
-      return res.status(400).json({
-        error: "Invalid request",
-        message: "Vui lòng điền email",
-        code: 400,
-      });
-    }
-    if (registeBody.password.length < 6) {
-      return res.status(400).json({
-        error: "Invalid request",
-        message: "Mật không đủ 6 kí tự",
-        code: 400,
-      });
-    }
-    const passwordInDB = passwordEncrypt(registeBody.password);
-    const role = await $prisma.roles.findMany({
-      where: {
-        name: "NORMAL_USER",
-      },
-      select: {
-        name: true,
-        id: true,
-      },
-    });
-    const userID = await $prisma.users.create({
-      data: {
-        email: registeBody.email,
-        password: passwordInDB,
-        name: registeBody.fullName,
-        role: role[0]?.id ?? "",
-      },
-    });
-    return res.status(200).json({
-      user_id: userID.id,
-      message: "Success",
-    });
-  } catch (err) {
-    console.log("node: auth.service.ts:line 131 : error: ", err);
-    return res.status(500).json({
-      error: "Internal server error",
-      message: "Lỗi khi tạo tài khoản",
-      code: 500,
-    });
-  }
 };
 
 export const logoutByEmail = async (req: Request, res: Response) => {
