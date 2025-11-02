@@ -12,6 +12,7 @@ configDotenv({ path: "./.env" });
 
 const app = express();
 const origin = env.ORIGIN ?? "http://localhost:5173";
+console.log('origin: ', origin);
 const whitelist = origin.split(",");
 const corsOptions = {
   origin: whitelist,

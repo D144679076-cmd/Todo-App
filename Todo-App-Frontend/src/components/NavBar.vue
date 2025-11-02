@@ -82,7 +82,7 @@ const toggleUserMenu = (event: Event) => {
             >
               <img
                 src="../assets/logov2.png"
-                alt="TaskFlow Logo"
+                alt="Lynxlab Logo"
                 class="w-7 h-7 rounded-lg"
               />
             </div>
@@ -90,7 +90,7 @@ const toggleUserMenu = (event: Event) => {
               <h1
                 class="text-xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text !text-white"
               >
-                Task Manager
+                Lynxlab
               </h1>
             </div>
           </div>

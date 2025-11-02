@@ -2,8 +2,9 @@ import { AuthData } from "@/composables/lib/type";
 import axios from "axios";
 
 // Get the base URL from the environment variable or use a fallback
-const baseURL = "http://localhost:8089";
+const baseURL = (import.meta as any).env.VITE_API_URL || "http://localhost:8089";
 
+console.log('API baseURL:', baseURL);
 // Create an Axios instance
 const $api = axios.create({
   baseURL, // Use the resolved base URL
