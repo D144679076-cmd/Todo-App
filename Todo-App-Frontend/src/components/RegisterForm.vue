@@ -203,7 +203,7 @@ const handleSubmit = () => {
         </Divider>
 
         <!-- Social Login Buttons -->
-        <div class="space-y-3">
+        <div class="flex flex-col gap-y-3">
           <Button
             type="button"
             label="GitHub"
