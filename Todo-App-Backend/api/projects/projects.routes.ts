@@ -7,7 +7,7 @@ import {
   useGetProjectsByQuery,
   useUpdateProject,
   useUpdateProjectsByQuery,
-} from "./projects.controller";
+} from "./projects.controller.ts";
 
 const projectsRouter = express.Router();
 
@@ -37,3 +37,5 @@ projectsRouter
   .delete((req, res) => {
     useDeleteProject(req, res);
   });
+
+export default projectsRouter;
