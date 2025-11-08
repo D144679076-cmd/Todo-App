@@ -9,7 +9,7 @@ export type Permission = {
     // roles?: Role; // Uncomment if you want nested relation
 };
 
-export type Role = {
+export type Roles = {
     id: string;
     name: string;
     permissions?: Permission[];
