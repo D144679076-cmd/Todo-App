@@ -1,20 +1,10 @@
-export type QueryParams = {
-  [key: string]: number | string | boolean;
-};
-export type OptionsParams = {
-  [key: string]: number | string | boolean;
-};
-export type QueryResponse<T> = {
-  data: T[];
-  isLoading: boolean;
-  isError: boolean;
-  refetch: () => Promise<T[]>;
-  error: any;
-};
+import type {Ref} from "vue";
+
 export type AuthData = {
-  token: string;
-  refreshToken: string;
-  user_id: string;
-  userEmail?: string; // Add userEmail field
-  lifetime: number;
+    token: string;
+    refreshToken: string;
+    user_id: string;
+    userEmail?: string; // Add userEmail field
+    lifetime: number;
 };
+export type QueryParams<T> = Partial<T>;
