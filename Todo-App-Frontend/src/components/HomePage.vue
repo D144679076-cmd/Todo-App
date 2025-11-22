@@ -1,271 +1,282 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import Card from "primevue/card";
-import Button from "primevue/button";
-import Menubar from "primevue/menubar";
+import {ref, computed} from 'vue'
+import Card from 'primevue/card'
+import Button from 'primevue/button'
+import Menubar from 'primevue/menubar'
 
 // Import components
-import TimeDisplay from "./TimeDisplay.vue";
-import CurrentTaskCard from "./CurrentTaskCard.vue";
-import TodaysDeadlines from "./TodaysDeadlines.vue";
-import TodaysSchedule from "./TodaysSchedule.vue";
-import AddTodoForm from "./AddTodoForm.vue";
-import TodoCard from "./TodoCard.vue";
+import TimeDisplay from './TimeDisplay.vue'
+import CurrentTaskCard from './CurrentTaskCard.vue'
+import TodaysDeadlines from './TodaysDeadlines.vue'
+import TodaysSchedule from './TodaysSchedule.vue'
+import AddTodoForm from './AddTodoForm.vue'
+import TodoCard from './TodoCard.vue'
+import {useMutation, useQuery} from '@tanstack/vue-query'
+import useAPI from '@/composables/api/useAPI'
+import {TASK_STATUS} from '@/composables/lib/enums'
+import {Tasks} from '@/composables/lib/respone'
+import {useAuth} from '@/composables/useAuth'
+import {useToast} from "primevue";
 
-// Types
-interface Todo {
-  id: string;
-  title: string;
-  description?: string;
-  completed: boolean;
-  priority: "low" | "medium" | "high";
-  dueDate?: string;
-}
+const {queryTasks, querySchedules, createTask, updateTask} = useAPI()
 
-interface Deadline {
-  id: string;
-  title: string;
-  time: string;
-  completed: boolean;
-}
-
-interface ScheduleItem {
-  id: string;
-  time: string;
-  title: string;
-  description: string;
-  status: "upcoming" | "current" | "completed";
-}
-
-// Reactive state
-const filter = ref<"all" | "active" | "completed">("all");
+const filter = ref<'all' | 'active' | 'completed' | 'pending'>('all')
 
 // Menu items for filter
 const menuItems = ref([
   {
-    label: "All Tasks",
-    icon: "pi pi-list",
-    command: () => setFilter("all"),
-    class: filter.value === "all" ? "active" : "",
+    label: 'All Tasks',
+    icon: 'pi pi-list',
+    command: () => setFilter('all'),
+    class: filter.value === 'all' ? 'active' : '',
   },
   {
-    label: "Active",
-    icon: "pi pi-clock",
-    command: () => setFilter("active"),
-    class: filter.value === "active" ? "active" : "",
+    label: 'Pending',
+    icon: 'pi pi-bookmark-fill',
+    command: () => setFilter('pending'),
+    class: filter.value === 'pending' ? 'pending' : '',
   },
   {
-    label: "Completed",
-    icon: "pi pi-check",
-    command: () => setFilter("completed"),
-    class: filter.value === "completed" ? "active" : "",
+    label: 'Active',
+    icon: 'pi pi-clock',
+    command: () => setFilter('active'),
+    class: filter.value === 'active' ? 'active' : '',
   },
-]);
+  {
+    label: 'Completed',
+    icon: 'pi pi-check',
+    command: () => setFilter('completed'),
+    class: filter.value === 'completed' ? 'active' : '',
+  },
+])
 
-const todos = ref<Todo[]>([
-  {
-    id: "1",
-    title: "Complete project proposal presentation",
-    description:
-      "Finalize slides and prepare talking points for Monday's client meeting",
-    completed: false,
-    priority: "high",
-    dueDate: "2025-08-23",
-  },
-  {
-    id: "2",
-    title: "Review marketing materials",
-    description: "Check the new branding guidelines",
-    completed: false,
-    priority: "medium",
-    dueDate: "2025-08-23",
-  },
-  {
-    id: "3",
-    title: "Submit expense report",
-    description: "Upload receipts and submit monthly expenses",
-    completed: true,
-    priority: "low",
-    dueDate: "2025-08-22",
-  },
-]);
+const {data: currentTask, isLoading, isError, refetch: currentRefetch} = useQuery({
+  queryKey: ['current-task'],
+  queryFn: () => queryTasks({
+    user_id: useAuth().authData.value?.user_id,
+    status: TASK_STATUS.IN_PROGRESS,
+  }),
+  select: data => data.data[0] as any as Tasks,
+})
+const {data: todos, isLoading: isLoadingTodo, isError: isErrorTodo, refetch: todoRefetch} = useQuery({
+  queryKey: ['todo-task'],
+  queryFn: () => queryTasks({
+    user_id: useAuth().authData.value?.user_id,
+    ...(filter.value && {
+      status: filter.value === 'active'
+          ? TASK_STATUS.IN_PROGRESS
+          : filter.value === 'completed'
+              ? TASK_STATUS.COMPLETED
+              : filter.value === 'pending'
+                  ? TASK_STATUS.PENDING
+                  : undefined,
+    }),
+  }),
+  select: data => data.data as any as Tasks[],
+})
 
-const deadlines = ref<Deadline[]>([
-  {
-    id: "1",
-    title: "Review marketing materials",
-    time: "3:30 PM",
-    completed: false,
-  },
-  {
-    id: "2",
-    title: "Team standup meeting",
-    time: "4:00 PM",
-    completed: false,
-  },
-  {
-    id: "3",
-    title: "Submit expense report",
-    time: "6:00 PM",
-    completed: false,
-  },
-]);
+const {
+  data: schedules,
+  isLoading: isLoadingSchedule,
+  isError: isErrorSchedule,
+  refetch: schedulesRefetch,
+} = useQuery({
+  queryKey: ['schedules'],
+  queryFn: () => querySchedules({
+    user_id: useAuth().authData.value?.user_id,
+  }),
+  select: data => data.data as any,
+})
 
-const scheduleItems = ref<ScheduleItem[]>([
-  {
-    id: "1",
-    time: "9:00 AM",
-    title: "Morning planning session",
-    description: "Review daily priorities and goals",
-    status: "completed",
-  },
-  {
-    id: "2",
-    time: "11:00 AM",
-    title: "Client call - Project Alpha",
-    description: "Discuss requirements and timeline",
-    status: "completed",
-  },
-  {
-    id: "3",
-    time: "2:30 PM",
-    title: "Complete project proposal",
-    description: "Current task - in progress",
-    status: "current",
-  },
-  {
-    id: "4",
-    time: "4:00 PM",
-    title: "Team standup meeting",
-    description: "Daily sync with development team",
-    status: "upcoming",
-  },
-  {
-    id: "5",
-    time: "5:30 PM",
-    title: "Wrap-up and planning",
-    description: "Review completed tasks and plan tomorrow",
-    status: "upcoming",
-  },
-]);
+const {
+  data: deadlines,
+  isLoading: isLoadingDeadlines,
+  isError: isErrorDeadlines,
+  refetch: refetchDeadlines,
+} = useQuery({
+  queryKey: ['todo-task'],
+  queryFn: () => queryTasks({
+    user_id: useAuth().authData.value?.user_id,
+    deadline: new Date(Date.now()),
+  }),
+  select: data => data.data as any as Tasks[],
+})
 
+const {
+  mutate: createTaskMutate, isPending, isError: isErrorCreateTask,
+} = useMutation({
+  mutationKey: ['create-task'],
+  mutationFn: (newTodo: Partial<Tasks>) => createTask(newTodo),
+})
+
+const {mutate: updateData, isPending: isUpdatePending, isError: isUpdateError} = useMutation({
+  mutationKey: ['update-task'],
+  mutationFn: (updateData: Partial<Tasks>) => updateTask(updateData.id ?? 0, updateData),
+})
 // Computed properties
-const filteredTodos = computed(() => {
-  switch (filter.value) {
-    case "active":
-      return todos.value.filter((todo) => !todo.completed);
-    case "completed":
-      return todos.value.filter((todo) => todo.completed);
-    default:
-      return todos.value;
+const stats = computed(() => {
+  console.log('todos', todos.value)
+  return {
+    total: todos.value?.length,
+    completed: todos.value?.filter((todo) => todo.status === TASK_STATUS.COMPLETED).length,
+    active: todos.value?.filter((todo) => todo.status !== TASK_STATUS.COMPLETED).length,
   }
-});
+})
 
-const stats = computed(() => ({
-  total: todos.value.length,
-  completed: todos.value.filter((todo) => todo.completed).length,
-  active: todos.value.filter((todo) => !todo.completed).length,
-}));
+const filteredTodos = computed(() => {
+  return todos.value || []
+})
 
+const toast = useToast()
 // Methods
-const setFilter = (newFilter: "all" | "active" | "completed") => {
-  filter.value = newFilter;
+const setFilter = (newFilter: 'all' | 'active' | 'completed' | 'pending') => {
+  filter.value = newFilter
   // Update menu items active state
   menuItems.value.forEach((item) => {
-    item.class = "";
-  });
+    item.class = ''
+  })
   const activeItem = menuItems.value.find(
-    (item) =>
-      (newFilter === "all" && item.label === "All Tasks") ||
-      (newFilter === "active" && item.label === "Active") ||
-      (newFilter === "completed" && item.label === "Completed")
-  );
+      (item) =>
+          (newFilter === 'all' && item.label === 'All Tasks') ||
+          (newFilter === 'active' && item.label === 'Active') ||
+          (newFilter === 'completed' && item.label === 'Completed'),
+  )
   if (activeItem) {
-    activeItem.class = "active";
+    activeItem.class = 'active'
   }
-};
+  todoRefetch()
+}
 
-const handleAddTodo = (todoData: {
-  title: string;
-  description: string;
-  priority: "low" | "medium" | "high";
-  dueDate: string;
-}) => {
-  const newTodo: Todo = {
-    id: Date.now().toString(),
-    title: todoData.title,
-    description: todoData.description,
-    completed: false,
-    priority: todoData.priority,
-    dueDate: todoData.dueDate,
-  };
-  todos.value.push(newTodo);
-};
+const handleAddTodo = (todoData: Partial<Tasks>) => {
+  createTaskMutate(todoData, {
+    onSuccess: () => {
+      toast.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Task created successfully',
+        life: 3000,
+      })
+      todoRefetch()
+      currentRefetch()
+    },
+    onError: (error) => {
+      toast.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Failed to create task',
+        life: 3000,
+      })
+    },
+  })
+}
 
-const handleToggleTodo = (id: string) => {
-  const todo = todos.value.find((t) => t.id === id);
-  if (todo) {
-    todo.completed = !todo.completed;
-  }
-};
+const handleToggleTodo = (id: number) => {
+  const todo = todos.value?.find((t) => t.id === id)
+  if (!todo) return
+
+  const newStatus = todo.status === TASK_STATUS.COMPLETED
+    ? TASK_STATUS.PENDING
+    : TASK_STATUS.COMPLETED
+
+  updateData(
+    { id, status: newStatus },
+    {
+      onSuccess: () => {
+        toast.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: `Task ${newStatus === TASK_STATUS.COMPLETED ? 'completed' : 'reopened'}`,
+          life: 3000,
+        })
+        todoRefetch()
+        currentRefetch()
+      },
+      onError: (error) => {
+        toast.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to update task',
+          life: 3000,
+        })
+      },
+    }
+  )
+}
 const menuCustomsBar = ref({
   light: {
     root: {
-      background: "{cyan.600}", // Gradient background
+      background: '{cyan.600}', // Gradient background
       item: {
-        color: "#ffffff",
+        color: '#ffffff',
         icon: {
-          color: "#ffffff",
+          color: '#ffffff',
         },
       },
       border: {
-        color: "{cyan.600}",
+        color: '{cyan.600}',
       },
     },
   },
   dark: {
     root: {
-      background: "{cyan.600}", // Gradient background
+      background: '{cyan.600}', // Gradient background
       item: {
-        color: "#ffffff",
+        color: '#ffffff',
         icon: {
-          color: "#ffffff",
+          color: '#ffffff',
         },
       },
       border: {
-        color: "{cyan.600}",
+        color: '{cyan.600}',
       },
     },
   },
-});
+})
 </script>
 <template>
   <div
-    class="h-full p-6 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900"
+      class="h-full p-6 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900"
   >
     <!-- Time Display Component -->
-    <TimeDisplay class="mt-8" />
+    <TimeDisplay class="mt-8"/>
 
     <div class="grid lg:grid-cols-3 gap-6">
       <!-- Left Column - Current Task & Deadlines -->
       <div class="lg:col-span-1 flex flex-col gap-y-6">
         <CurrentTaskCard
-          title="Complete project proposal presentation"
-          description="Finalize slides and prepare talking points for Monday's client meeting"
-          status="In Progress"
-          startedTime="1h ago"
-          dueTime="5:00 PM today"
+            v-if="currentTask"
+            :title="currentTask?.title"
+            :description="currentTask?.description"
+            :status="currentTask?.status"
+            :startedTime="currentTask?.created_at"
+            :dueTime="currentTask?.deadline"
         />
+        <div v-else>
+          <Card class="!bg-slate-800 !text-white">
+            <template #content>
+              <div class="p-8 text-center">
+                <i
+                    class="pi pi-tasks text-5xl text-muted-foreground mb-4"
+                ></i>
+                <h3 class="text-lg font-semibold text-foreground mb-2">
+                  No Current Task
+                </h3>
+                <p class="text-muted-foreground">
+                  You have no tasks in progress. Start a new task to see it here.
+                </p>
+              </div>
+            </template>
+          </Card>
+        </div>
+        <TodaysDeadlines :deadlines="deadlines"/>
 
-        <TodaysDeadlines :deadlines="deadlines" />
-
-        <TodaysSchedule :scheduleItems="scheduleItems" />
+        <TodaysSchedule :scheduleItems="schedules"/>
       </div>
 
       <!-- Right Column - Todo Management -->
       <div class="lg:col-span-2 gap-y-6 flex flex-col">
         <!-- Add Todo Form -->
-        <AddTodoForm @add="handleAddTodo" />
+        <AddTodoForm @add="handleAddTodo"/>
 
         <!-- Stats Cards -->
         <div class="grid grid-cols-3 gap-4">
@@ -321,25 +332,25 @@ const menuCustomsBar = ref({
 
         <!-- Todo List -->
         <div class="gap-y-3 flex flex-col">
-          <template v-if="filteredTodos.length === 0">
+          <template v-if="filteredTodos?.length === 0">
             <Card class="!bg-slate-800 !text-white">
               <template #content>
                 <div class="p-8 text-center">
                   <i
-                    class="pi pi-check-circle text-5xl text-muted-foreground mb-4"
+                      class="pi pi-check-circle text-5xl text-muted-foreground mb-4"
                   ></i>
                   <h3 class="text-lg font-semibold text-foreground mb-2">
                     {{
-                      filter === "completed"
-                        ? "No completed tasks"
-                        : "No tasks yet"
+                      filter === 'completed'
+                          ? 'No completed tasks'
+                          : 'No tasks yet'
                     }}
                   </h3>
                   <p class="text-muted-foreground">
                     {{
-                      filter === "completed"
-                        ? "Complete some tasks to see them here."
-                        : "Add your first task to get started with TaskFlow."
+                      filter === 'completed'
+                          ? 'Complete some tasks to see them here.'
+                          : 'Add your first task to get started with TaskFlow.'
                     }}
                   </p>
                 </div>
@@ -348,10 +359,10 @@ const menuCustomsBar = ref({
           </template>
           <template v-else>
             <TodoCard
-              v-for="todo in filteredTodos"
-              :key="todo.id"
-              v-bind="todo"
-              @toggle="handleToggleTodo"
+                v-for="todo in filteredTodos"
+                :key="todo.id"
+                v-bind="todo"
+                @toggle="handleToggleTodo"
             />
           </template>
         </div>

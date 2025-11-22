@@ -39,7 +39,7 @@ app.use("/tasks", tasksRouter);
 app.use('/roles', rolesRouter);
 app.use("/permissions", permissionsRouter);
 app.use("/projects", projectsRouter)
-app.use("schedules", schedulesRouter)
+app.use("/schedules", schedulesRouter)
 const initApp = () => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));

@@ -7,18 +7,13 @@ import Select from "primevue/select";
 import Button from "primevue/button";
 import DatePicker from "primevue/datepicker";
 import FloatLabel from "primevue/floatlabel";
+import {Tasks} from "@/composables/lib/respone";
 
 // Define the props
-interface TodoData {
-  title: string;
-  description: string;
-  priority: "low" | "medium" | "high";
-  dueDate: string;
-}
 
 // Define emits
 const emit = defineEmits<{
-  add: [todo: TodoData];
+  add: [todo: Partial<Tasks>];
 }>();
 
 // Reactive state
@@ -42,7 +37,7 @@ const handleSubmit = () => {
     title: title.value.trim(),
     description: description.value.trim(),
     priority: priority.value,
-    dueDate: dueDate.value ? dueDate.value.toISOString().split("T")[0] : "",
+    deadline: dueDate.value ,
   });
 
   // Reset form

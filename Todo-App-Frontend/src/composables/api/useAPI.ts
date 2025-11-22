@@ -5,8 +5,8 @@ import {useQuery} from "@tanstack/vue-query";
 import {QueryParams} from "@/composables/lib/type";
 
 const useAPI = () => {
-    const queryTasks = (query?: QueryParams<Tasks>): Promise<AxiosResponse<Tasks, any>> => {
-        return $api.get<Tasks>('/taks', {
+    const queryTasks = (query?: QueryParams<Tasks>): Promise<AxiosResponse<Tasks[], any>> => {
+        return $api.get<Tasks[]>('/tasks', {
             params: query,
         })
     }

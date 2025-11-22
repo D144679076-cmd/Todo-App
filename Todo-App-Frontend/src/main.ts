@@ -6,6 +6,7 @@ import PrimeVue from "primevue/config";
 import Aura from "@primeuix/themes/aura";
 import "./assets/main.css";
 import ToastService from "primevue/toastservice";
+import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query'
 const app = createApp(App);
 const newPreset = definePreset(Aura, {
   semantic: {
@@ -84,3 +85,8 @@ app.use(PrimeVue, {
 app.use(ToastService);
 
 app.mount("#app");
+const queryClient = new QueryClient()
+
+app.use(VueQueryPlugin, {
+  queryClient: queryClient
+})

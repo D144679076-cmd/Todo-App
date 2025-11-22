@@ -2,20 +2,12 @@
 import { defineProps, defineEmits, computed } from "vue";
 import Card from "primevue/card";
 import Badge from "primevue/badge";
+import { Tasks } from '@/composables/lib/respone'
 
-interface TodoCardProps {
-  id: string;
-  title: string;
-  description?: string;
-  completed: boolean;
-  priority: "low" | "medium" | "high";
-  dueDate?: string;
-}
-
-const props = defineProps<TodoCardProps>();
+const props = defineProps<Partial<Tasks>>();
 
 const emit = defineEmits<{
-  toggle: [id: string];
+  toggle: [id: number];
 }>();
 
 const handleToggle = () => {

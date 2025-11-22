@@ -1,50 +1,59 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import {computed} from "vue";
 import Card from "primevue/card";
-import Badge from "primevue/badge";
 import Button from "primevue/button";
+import {TASK_STATUS} from "@/composables/lib/enums";
 
 // Define the props
 interface CurrentTaskProps {
-  title: string;
-  description: string;
-  status: "In Progress" | "Pending" | "Completed";
-  startedTime: string;
-  dueTime: string;
+  title: string  | undefined;
+  description: string | undefined | null;
+  status: TASK_STATUS | undefined|string;
+  startedTime: Date| string | undefined;
+  dueTime: string | undefined | null | Date;
 }
 
 const props = defineProps<CurrentTaskProps>();
 
 // Status color mapping
 const statusColors = computed(() => {
-  const colors = {
-    "In Progress": {
-      bg: "bg-green-500/20",
-      text: "text-green-400",
-      border: "border-green-500/30",
-    },
-    Pending: {
-      bg: "bg-yellow-500/20",
-      text: "text-yellow-400",
-      border: "border-yellow-500/30",
-    },
-    Completed: {
-      bg: "bg-blue-500/20",
-      text: "text-blue-400",
-      border: "border-blue-500/30",
-    },
+  switch (props.status) {
+    case TASK_STATUS.IN_PROGRESS:{
+      return {
+        bg: "bg-green-500/20",
+        text: "text-green-400",
+        border: "border-green-500/30",
+      }
+    }
+    case TASK_STATUS.COMPLETED:{
+      return {
+        bg: "bg-blue-500/20",
+        text: "text-blue-400",
+        border: "border-blue-500/30",
+      }
+    }
+    case TASK_STATUS.PENDING:{
+      return {
+        bg: "bg-yellow-500/20",
+        text: "text-yellow-400",
+        border: "border-yellow-500/30",
+      }
+    }
   };
-  return colors[props.status];
 });
 
 // Status icon mapping
 const statusIcon = computed(() => {
-  const icons = {
-    "In Progress": "pi pi-clock",
-    Pending: "pi pi-exclamation-circle",
-    Completed: "pi pi-check-circle",
-  };
-  return icons[props.status];
+  switch (props.status) {
+    case TASK_STATUS.IN_PROGRESS:
+      return "pi pi-clock";
+    case TASK_STATUS.COMPLETED:
+      return "pi pi-exclamation-circle";
+    case TASK_STATUS.PENDING:
+      return "pi pi-check-circle";
+    default:
+      return "";
+  }
 });
 </script>
 
@@ -57,7 +66,7 @@ const statusIcon = computed(() => {
           <h3 class="text-lg font-bold">Current Task</h3>
           <div
             class="px-3 py-1 rounded-full text-xs font-medium border"
-            :class="[statusColors.bg, statusColors.text, statusColors.border]"
+            :class="[statusColors?.bg, statusColors?.text, statusColors?.border]"
           >
             <i :class="statusIcon" class="mr-1"></i>
             {{ status }}

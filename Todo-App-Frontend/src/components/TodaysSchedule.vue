@@ -42,7 +42,7 @@
         </Timeline>
 
         <div
-          v-if="scheduleItems.length === 0"
+          v-if="scheduleItems?.length === 0"
           class="text-center py-8 text-slate-300"
         >
           <i class="pi pi-calendar text-4xl mx-auto mb-3 opacity-50 block"></i>

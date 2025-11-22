@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<FeatureCardProps>(), {
 </script>
 
 <template>
-  <Card>
+  <Card  class="bg-gradient-card">
     <template #content>
       <div class="p-6 space-y-4">
         <div

@@ -2,16 +2,12 @@
 import { defineProps, defineEmits } from "vue";
 import Card from "primevue/card";
 import Checkbox from "primevue/checkbox";
-
-interface DeadlineItem {
-  id: string;
-  title: string;
-  time: string;
-  completed: boolean;
-}
-
+import { Tasks } from '@/composables/lib/respone'
+import { TASK_STATUS } from '@/composables/lib/enums'
+import { ref } from "vue";
+import DeadlineCard from '@/components/DeadlineCard.vue'
 interface TodaysDeadlinesProps {
-  deadlines: DeadlineItem[];
+  deadlines: Tasks[] | undefined;
 }
 
 const props = defineProps<TodaysDeadlinesProps>();
@@ -23,6 +19,7 @@ const emit = defineEmits<{
 const handleToggleDeadline = (id: string) => {
   emit("toggleDeadline", id);
 };
+
 </script>
 <template>
   <Card class="!bg-slate-800 !text-white">
@@ -34,38 +31,16 @@ const handleToggleDeadline = (id: string) => {
 
         <div class="gap-y-3 flex flex-col">
           <div
+            v-if="deadlines?.length > 0"
             v-for="deadline in deadlines"
             :key="deadline.id"
             class="flex items-center justify-between p-3 rounded-lg bg-secondary/30 hover:bg-secondary/40 transition-smooth"
           >
-            <div class="flex items-center gap-x-3">
-              <Checkbox
-                v-model="deadline.completed"
-                class="border-border"
-                :binary="true"
-              />
-              <span
-                :class="[
-                  'text-sm',
-                  deadline.completed
-                    ? 'line-through text-muted-foreground'
-                    : 'text-foreground',
-                ]"
-              >
-                {{ deadline.title }}
-              </span>
-            </div>
-
-            <div
-              class="flex items-center gap-x-1 text-sm text-muted-foreground"
-            >
-              <i class="pi pi-clock h-4 w-4"></i>
-              <span>{{ deadline.time }}</span>
-            </div>
+            <DeadlineCard :deadline="deadline" />
           </div>
 
           <div
-            v-if="deadlines.length === 0"
+            v-else
             class="text-center py-6 text-muted-foreground"
           >
             <i class="pi pi-clock text-4xl mx-auto mb-2 opacity-50 block"></i>

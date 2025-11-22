@@ -13,7 +13,7 @@ import {
 export const useGetTasksByID = async (req: Request, res: Response) => {
   const { id } = req.params;
   const tasks = await getTasksbyID(id);
-  res.status(200).json({ tasks });
+  res.status(200).json(tasks);
 };
 export const useCreateTask = async (req: Request, res: Response) => {
   const body = req.body;
@@ -37,7 +37,7 @@ export const useDeleteTaskByID = async (req: Request, res: Response) => {
 export const useGetTasks = async (req: Request, res: Response) => {
   const query: queryObject = req.query as queryObject;
   const tasks = await getTasks(query);
-  res.status(200).json({ tasks });
+  res.status(200).json(tasks);
 };
 export const useUpdateTasks = async (req: Request, res: Response) => {
   const queryObject = req.query as queryObject;
