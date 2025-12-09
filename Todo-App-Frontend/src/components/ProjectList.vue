@@ -339,13 +339,9 @@ const customPaginator = ref({
             description="Seamless team coordination with live updates, instant notifications, and collaborative workspaces."
             gradient="success" />
         </div>
-      </div>
-      <div>
-        <Button
-          label="Create Your First Project"
-          icon="pi pi-plus"
-          class="mt-8"
-          @click="openCreateDialog" />
+        <div>
+          <Button label="Create Your First Project" icon="pi pi-plus" @click="openCreateDialog" />
+        </div>
       </div>
     </div>
 
